@@ -1,13 +1,17 @@
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 const { mmGetLyrics } = require('./musixMatch.js')
+const log = require('electron-log');
 const { autoUpdater } = require("electron-updater")
 
-autoUpdater.checkForUpdatesAndNotify()
+  autoUpdater.logger = log;
+  autoUpdater.logger.transports.file.level = 'info';
+  log.info('App starting...');
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
   let win
   
   function createWindow () {
+    autoUpdater.checkForUpdatesAndNotify();
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600, frame: false })
   
