@@ -5,10 +5,15 @@
     </head>
     <body>
         <div id="title-bar" class="title-bar">
-            <div id="toggle-fullscreen-btn" class="mdi mdi-fullscreen"></div>
-            <div id="minimize-btn" class="mdi mdi-window-minimize"></div>
-            <div id="maximize-btn" class="mdi mdi-window-maximize"></div>
-            <div id="quit-btn" class="mdi mdi-window-close"></div>
+            <div>
+                    <span class="window-title">YouTube Music for Desktop</span>
+            </div>
+            <div>
+                <div id="toggle-fullscreen-btn" class="mdi mdi-fullscreen"></div>
+                <div id="minimize-btn" class="mdi mdi-window-minimize"></div>
+                <div id="maximize-btn" class="mdi mdi-window-maximize"></div>
+                <div id="quit-btn" class="mdi mdi-window-close"></div>
+            </div>
         </div>
         <webview id="myweb" src="https://music.youtube.com" preload="./injector.js"></webview>
     </body>
@@ -96,9 +101,10 @@ webview.addEventListener('ipc-message',function(event){
     .title-bar {
         background-color: #ff0000;
         display: flex;
-        justify-content: flex-end;
+        justify-content: stretch;
         -webkit-user-select: none;
         -webkit-app-region: drag;
+        color: #eee;
     }
     .title-bar.collapsed {
         height:16px;
@@ -119,10 +125,19 @@ webview.addEventListener('ipc-message',function(event){
         padding: 4px;
     }
     .title-bar > div {
+        width: 50%;
+        display: inline-flex;
+    }
+    .title-bar > div:first-child {
+        justify-content: flex-start;
+    }
+    .title-bar > div:last-child {
+        justify-content: flex-end;
+    }
+    .title-bar > div > div {
         cursor: pointer;
         -webkit-app-region: no-drag;
         font-size: 24px;
-        color: #282828;
     }
     html, body, #myweb {
         padding: 0;
@@ -132,5 +147,10 @@ webview.addEventListener('ipc-message',function(event){
     }
     #myweb.fullscreened {
         height: 100vh;
+    }
+    .window-title {
+        overflow: hidden;
+        line-height: 1.5em;
+        font-family: "Roboto";
     }
 </style>
