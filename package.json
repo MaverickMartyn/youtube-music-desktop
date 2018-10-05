@@ -1,0 +1,16 @@
+{
+  "name": "youtube-music-desktop",
+  "version": "1.0.0",
+  "description": "An unofficial YouTube Music app for desktop.",
+  "main": "index.js",
+  "author": "Martin Aaby Finnerup",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "@mdi/font": "^2.8.94",
+    "axios": "^0.18.0",
+    "xml2js": "^0.4.19"
+  }
+}

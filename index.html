@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <title>YouTube Music for Desktop</title>
+        <link href="node_modules/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="title-bar" class="title-bar">
+            <div id="toggle-fullscreen-btn" class="mdi mdi-fullscreen"></div>
+            <div id="minimize-btn" class="mdi mdi-window-minimize"></div>
+            <div id="maximize-btn" class="mdi mdi-window-maximize"></div>
+            <div id="quit-btn" class="mdi mdi-window-close"></div>
+        </div>
+        <webview id="myweb" src="https://music.youtube.com" preload="./injector.js"></webview>
+    </body>
+</html>
+
+<script>
+    const {ipcRenderer} = require('electron');
+    var webview = document.getElementById("myweb");
+
+    // When everything is ready, trigger the events without problems
+    webview.addEventListener("dom-ready", function() {
+    var path = require('path');
+    var p = path.join(__dirname, '.', 'mm-lyrics.css');
+    var fs = require('fs');
+    fs.readFile(p, 'utf8', function (err, data) {
+        if (err) return console.log(err);
+        webview.insertCSS(data)
+    });
+    var p = path.join(__dirname, '.', 'musix-match-logo.base64');
+    fs.readFile(p, 'utf8', function (err, data) {
+        if (err) return console.log(err);
+        webview.send("mm:set-icon", data);
+    });
+
+    // Show devTools if you want
+    //webview.openDevTools();
+    console.log("DOM-Ready, triggering events !");
+    
+    // Aler the scripts src of the website from the <webview>
+    webview.send("request");
+    document.getElementById("quit-btn").addEventListener("click", function () {
+        // Send quit
+        ipcRenderer.send('app:quit')
+    });
+    document.getElementById("maximize-btn").addEventListener("click", function (e) {
+        ipcRenderer.send('app:toggle-maximize')
+    });
+    ipcRenderer.on('app:toggled-maximize', function(event, isMaximized){
+        if (isMaximized) {
+            document.getElementById("maximize-btn").classList.add("mdi-window-restore")
+            document.getElementById("maximize-btn").classList.remove("mdi-window-maximize")
+        }
+        else {
+            document.getElementById("maximize-btn").classList.remove("mdi-window-restore")
+            document.getElementById("maximize-btn").classList.add("mdi-window-maximize")
+        }
+    });
+    ipcRenderer.on('app:toggled-fullscreen', function(event, isFullscreen){
+        if (isFullscreen) {
+            document.getElementById("title-bar").classList.add("collapsed")
+            document.getElementById("myweb").classList.add("fullscreened")
+        }
+        else {
+            document.getElementById("title-bar").classList.remove("collapsed")
+            document.getElementById("myweb").classList.remove("fullscreened")
+        }
+    });
+    document.getElementById("minimize-btn").addEventListener("click", function () {
+        ipcRenderer.send('app:minimize')
+    });
+    document.getElementById("toggle-fullscreen-btn").addEventListener("click", function (e) {
+        ipcRenderer.send('app:togglefullscreen')
+    });
+    // alert-something
+    webview.send("initialize");
+    
+    // change-text-element manipulating the DOM
+    // webview.send("change-text-element",{
+    //     id: "placeholder",
+    //     text: "My text"
+    // });
+});
+
+// Process the data from the webview
+webview.addEventListener('ipc-message',function(event){
+    console.log(event);
+    console.info(event.channel);
+});
+</script>
+
+<style>
+    body {
+        background-color: #282828;
+    }
+    .title-bar {
+        background-color: #ff0000;
+        display: flex;
+        justify-content: flex-end;
+        -webkit-user-select: none;
+        -webkit-app-region: drag;
+    }
+    .title-bar.collapsed {
+        height:16px;
+        position: fixed;
+        padding: 0;
+        width: 100vw;
+        -webkit-app-region: no-drag;
+    }
+    .title-bar.collapsed > div:not(#toggle-fullscreen-btn) {
+        display: none;
+    }
+    .title-bar.collapsed:not(:hover) > div#toggle-fullscreen-btn {
+        font-size: 16px;
+    }
+    .title-bar, .title-bar.collapsed:hover {
+        height: 24px;
+        width: calc(100vw - 8px);
+        padding: 4px;
+    }
+    .title-bar > div {
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+        font-size: 24px;
+        color: #282828;
+    }
+    html, body, #myweb {
+        padding: 0;
+        margin: 0;
+        width: 100vw;
+        height: calc(100vh - 32px);
+    }
+    #myweb.fullscreened {
+        height: 100vh;
+    }
+</style>

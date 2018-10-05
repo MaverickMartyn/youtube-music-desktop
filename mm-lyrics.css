@@ -1,0 +1,26 @@
+.mm-lyrics {
+    position: absolute;
+    top: 65px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    padding: 2em;
+    color: #fff;
+    border-radius: 25px;
+    overflow-y: scroll;
+    display: none;
+    font-size: xx-large;
+
+}
+
+.show {
+    display: block;
+}
+
+#musix-match-lyrics-btn {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
