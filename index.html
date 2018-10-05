@@ -113,10 +113,10 @@ webview.addEventListener('ipc-message',function(event){
         width: 100vw;
         -webkit-app-region: no-drag;
     }
-    .title-bar.collapsed > div:not(#toggle-fullscreen-btn) {
+    .title-bar.collapsed > div > div:not(#toggle-fullscreen-btn) {
         display: none;
     }
-    .title-bar.collapsed:not(:hover) > div#toggle-fullscreen-btn {
+    .title-bar.collapsed:not(:hover) > div > div#toggle-fullscreen-btn {
         font-size: 16px;
     }
     .title-bar, .title-bar.collapsed:hover {
@@ -152,5 +152,11 @@ webview.addEventListener('ipc-message',function(event){
         overflow: hidden;
         line-height: 1.5em;
         font-family: "Roboto";
+    }
+    .title-bar.collapsed:not(:hover) .window-title {
+        line-height: 1em;
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
     }
 </style>
