@@ -6,11 +6,32 @@
   "author": "Martin Aaby Finnerup",
   "license": "MIT",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build"
   },
   "dependencies": {
     "@mdi/font": "^2.8.94",
     "axios": "^0.18.0",
     "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "^20.28.4"
+  },
+  "build": {
+    "appId": "youtube-music-desktop",
+    "productName": "YouTube Music for Desktop",
+    "dmg": null,
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "images/youtube_music_icon_.ico"
+    }
   }
 }
