@@ -1,18 +1,18 @@
 .mm-lyrics {
-    position: absolute;
+    position: fixed;
     top: 65px;
     bottom: 20px;
     left: 20px;
     right: 20px;
     background-color: rgba(0, 0, 0, 0.8);
-    z-index: 2;
+    z-index: 4;
     padding: 2em;
-    color: #fff;
+    color: #c3c3c3;
     border-radius: 25px;
     overflow-y: scroll;
     display: none;
-    font-size: xx-large;
-
+    font-size: 3em;
+    text-align: center;
 }
 
 .show {
@@ -23,4 +23,9 @@
     width: 32px;
     height: 32px;
     cursor: pointer;
+}
+
+.active-lyric {
+    font-size: 4em;
+    color: #fff;
 }

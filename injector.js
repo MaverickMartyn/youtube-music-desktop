@@ -24,7 +24,8 @@ ipcRenderer.on("initialize",function(event,data){
     });
     ipcRenderer.on("mm:lyrics-changed", function (event, args) {
         console.log("New lyrics recieved.");
-        renderLyrics(JSON.parse(JSON.stringify(args)));
+        window.lyrics = JSON.parse(JSON.stringify(args));
+        renderLyrics(window.lyrics);
     })
     var codeImgTag = document.querySelector("#layout > ytmusic-player-bar > div.middle-controls.style-scope.ytmusic-player-bar > img")
     var x = new MutationObserver(function(e) {
@@ -35,11 +36,22 @@ ipcRenderer.on("initialize",function(event,data){
         attributes: true
     });
     SendVideoCodeToMain(codeImgTag);
-});
 
-ipcRenderer.on("change-text-element",function(event,data){
-    // the document references to the document of the <webview>
-    document.getElementById(data.id).innerHTML = data.text;
+    document.getElementById('progress-bar').addEventListener("value-changed", function (data) {
+        for (let i = 0; i < window.lyrics.transcript.text.length; i++) {
+            const lyric = window.lyrics.transcript.text[i];
+            if (lyric.$.start >= data.detail.value) {
+                console.log("Active lyric: "+lyric._);
+                var el = document.querySelector("#musix-match-lyrics > p[data-index=\""+i+"\"]")
+                el.classList.add("active-lyric");
+                el.scrollIntoView();
+                return;
+            }
+            else {
+                document.querySelector("#musix-match-lyrics > p[data-index=\""+i+"\"]").classList.remove("active-lyric");
+            }
+        }
+    });
 });
 
 function renderLyrics(lyrics) {
@@ -48,7 +60,7 @@ function renderLyrics(lyrics) {
     if (lyrics !== null) {
         for (let i = 0; i < lyrics.transcript.text.length; i++) {
             const line = lyrics.transcript.text[i];
-            lyricsHtml += '<p>'+line._+'</p>';
+            lyricsHtml += '<p data-index="'+i+'">'+line._+'</p>';
         }
     }
     else {
