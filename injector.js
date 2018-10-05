@@ -8,6 +8,18 @@ ipcRenderer.on('request', function(){
 ipcRenderer.on("mm:set-icon", function (event, data) {
     document.getElementById("musix-match-lyrics-btn").src = data;
 })
+ipcRenderer.on("media:playpause", function () {
+    document.getElementById("play-pause-button").click();
+})
+// ipcRenderer.on("media:stop", function () {
+//     document.getElementById("play-pause-button").click();
+// })
+ipcRenderer.on("media:next", function () {
+    document.querySelector("#left-controls > div > paper-icon-button.next-button.style-scope.ytmusic-player-bar").click();
+})
+ipcRenderer.on("media:previous", function () {
+    document.querySelector("#left-controls > div > paper-icon-button.previous-button.style-scope.ytmusic-player-bar").click();
+})
 ipcRenderer.on("initialize",function(event,data){
     // Set up events for getting playback
     // Gets the current progress through the current track in seconds.

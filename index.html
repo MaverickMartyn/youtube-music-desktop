@@ -22,7 +22,6 @@
 <script>
     const {ipcRenderer} = require('electron');
     var webview = document.getElementById("myweb");
-
     // When everything is ready, trigger the events without problems
     webview.addEventListener("dom-ready", function() {
     var path = require('path');
@@ -79,6 +78,18 @@
     });
     // alert-something
     webview.send("initialize");
+    ipcRenderer.on("media:playpause", function () {
+        webview.send("media:playpause");
+    })
+    // ipcRenderer.on("media:stop", function () {
+    //     webview.send("media:stop");
+    // })
+    ipcRenderer.on("media:next", function () {
+        webview.send("media:next");
+    })
+    ipcRenderer.on("media:previous", function () {
+        webview.send("media:previous");
+    })
     
     // change-text-element manipulating the DOM
     // webview.send("change-text-element",{

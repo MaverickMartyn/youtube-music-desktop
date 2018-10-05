@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 const { mmGetLyrics } = require('./musixMatch.js')
 const { autoUpdater } = require("electron-updater")
 
@@ -25,6 +25,41 @@ autoUpdater.checkForUpdatesAndNotify()
       // when you should delete the corresponding element.
       win = null
     })
+
+    var registered = globalShortcut.register('medianexttrack', function () {
+      win.webContents.send("media:next");
+    });
+    if (!registered) {
+      console.log('medianexttrack registration failed');
+    } else {
+      console.log('medianexttrack registration bound!');
+    }
+  
+    // registered = globalShortcut.register('mediastop', function () {
+    //   win.webContents.send("media:stop");
+    // });
+    // if (!registered) {
+    //   console.log('mediastop registration failed');
+    // } else {
+    //   console.log('mediastop registration bound!');
+    // }
+    
+    registered = globalShortcut.register('mediaprevioustrack', function () {
+      win.webContents.send("media:previous");
+    });
+    if (!registered) {
+      console.log('mediaprevioustrack registration failed');
+    } else {
+      console.log('mediaprevioustrack registration bound!');
+    }
+    registered = globalShortcut.register('mediaplaypause', function () {
+      win.webContents.send("media:playpause");
+    });
+    if (!registered) {
+      console.log('mediaplaypause registration failed');
+    } else {
+      console.log('mediaplaypause registration bound!');
+    }
   }
   
   // This method will be called when Electron has finished
@@ -73,7 +108,3 @@ autoUpdater.checkForUpdatesAndNotify()
       createWindow()
     }
   })
-  
-  // In this file you can include the rest of your app's specific main process
-  // code. You can also put them in separate files and require them here.
-  
