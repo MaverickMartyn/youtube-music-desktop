@@ -1,6 +1,8 @@
 # YouTube Music for Desktop
 An unofficial desktop client for YouTube Music, with integrated lyrics from MusixMatch. 
 
+![Animated gif of YouTube Music for Desktop](./screenshots/youtube-music.gif)
+
 ### Todo:
 See [TODO.md](TODO.md)
 
