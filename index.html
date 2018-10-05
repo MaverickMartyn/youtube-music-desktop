@@ -27,7 +27,7 @@
         if (err) return console.log(err);
         webview.insertCSS(data)
     });
-    var p = path.join(__dirname, '.', 'musix-match-logo.base64');
+    var p = path.join(__dirname, '.', 'images', 'musix-match-logo.base64');
     fs.readFile(p, 'utf8', function (err, data) {
         if (err) return console.log(err);
         webview.send("mm:set-icon", data);
