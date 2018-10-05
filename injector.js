@@ -29,6 +29,7 @@ ipcRenderer.on("initialize",function(event,data){
     })
     var codeImgTag = document.querySelector("#layout > ytmusic-player-bar > div.middle-controls.style-scope.ytmusic-player-bar > img")
     var x = new MutationObserver(function(e) {
+        window.trackStartTime = Date.now();
         SendVideoCodeToMain(codeImgTag);
     });
     
@@ -37,22 +38,37 @@ ipcRenderer.on("initialize",function(event,data){
     });
     SendVideoCodeToMain(codeImgTag);
 
+    // setInterval(function () {
+    //     var currentTime = ((Date.now() - window.trackStartTime))/1000
+    //     syncLyrics(currentTime);
+    //     console.log("Current track time: "+currentTime);
+    // }, 10)
+
     document.getElementById('progress-bar').addEventListener("value-changed", function (data) {
-        for (let i = 0; i < window.lyrics.transcript.text.length; i++) {
-            const lyric = window.lyrics.transcript.text[i];
-            if (lyric.$.start >= data.detail.value) {
-                console.log("Active lyric: "+lyric._);
-                var el = document.querySelector("#musix-match-lyrics > p[data-index=\""+i+"\"]")
-                el.classList.add("active-lyric");
-                el.scrollIntoView();
-                return;
-            }
-            else {
-                document.querySelector("#musix-match-lyrics > p[data-index=\""+i+"\"]").classList.remove("active-lyric");
-            }
-        }
+        syncLyrics(data.detail.value);
     });
 });
+
+function syncLyrics(time) {
+    for (let i = 0; i < window.lyrics.transcript.text.length; i++) {
+        const lyric = window.lyrics.transcript.text[i];
+        if (lyric.$.start >= (time-0.25)) {
+            console.log("Active lyric: "+lyric._);
+            var el = document.querySelector("#musix-match-lyrics > p[data-index=\""+i+"\"]")
+            var elContainer = document.getElementById("musix-match-lyrics");
+            el.classList.add("active-lyric");
+            el.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+                inline: 'center'
+            });
+            return;
+        }
+        else {
+            document.querySelector("#musix-match-lyrics > p[data-index=\""+i+"\"]").classList.remove("active-lyric");
+        }
+    }
+}
 
 function renderLyrics(lyrics) {
     document.getElementById("musix-match-lyrics").innerHTML = "";
