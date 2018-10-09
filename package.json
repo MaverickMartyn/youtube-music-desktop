@@ -1,15 +1,20 @@
 {
   "name": "youtube-music-desktop",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An unofficial YouTube Music app for desktop.",
   "main": "index.js",
-  "author": "Martin Aaby Finnerup",
+  "author":
+  {
+    "name" : "Martin Aaby Finnerup",
+    "email" : "contact@codeslasher.com",
+    "url" : "httpa://www.codeslasher.com/"
+  },
   "license": "MIT",
   "scripts": {
     "start": "electron .",
     "pack": "build --dir",
     "dist": "build",
-    "publish": "build -p always"
+    "publish": "build --win --mac --linux -p always"
   },
   "dependencies": {
     "@mdi/font": "^2.8.94",
