@@ -2,6 +2,7 @@
     <head>
         <title>YouTube Music for Desktop</title>
         <link href="node_modules/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" />
+        <link href="window.css" rel="stylesheet" />
     </head>
     <body>
         <div id="title-bar" class="title-bar">
@@ -31,10 +32,21 @@
         if (err) return console.log(err);
         webview.insertCSS(data)
     });
+    var p = path.join(__dirname, '.', 'misc-injected.css');
+    var fs = require('fs');
+    fs.readFile(p, 'utf8', function (err, data) {
+        if (err) return console.log(err);
+        webview.insertCSS(data)
+    });
     var p = path.join(__dirname, '.', 'images', 'musix-match-logo.base64');
     fs.readFile(p, 'utf8', function (err, data) {
         if (err) return console.log(err);
         webview.send("mm:set-icon", data);
+    });
+    var p = path.join(__dirname, '.', 'images', 'settings.base64');
+    fs.readFile(p, 'utf8', function (err, data) {
+        if (err) return console.log(err);
+        webview.send("app:set-settings-icon", data);
     });
 
     // Show devTools if you want
@@ -43,39 +55,10 @@
     
     // Aler the scripts src of the website from the <webview>
     webview.send("request");
-    document.getElementById("quit-btn").addEventListener("click", function () {
-        // Send quit
-        ipcRenderer.send('app:quit')
-    });
-    document.getElementById("maximize-btn").addEventListener("click", function (e) {
-        ipcRenderer.send('app:toggle-maximize')
-    });
-    ipcRenderer.on('app:toggled-maximize', function(event, isMaximized){
-        if (isMaximized) {
-            document.getElementById("maximize-btn").classList.add("mdi-window-restore")
-            document.getElementById("maximize-btn").classList.remove("mdi-window-maximize")
-        }
-        else {
-            document.getElementById("maximize-btn").classList.remove("mdi-window-restore")
-            document.getElementById("maximize-btn").classList.add("mdi-window-maximize")
-        }
-    });
-    ipcRenderer.on('app:toggled-fullscreen', function(event, isFullscreen){
-        if (isFullscreen) {
-            document.getElementById("title-bar").classList.add("collapsed")
-            document.getElementById("myweb").classList.add("fullscreened")
-        }
-        else {
-            document.getElementById("title-bar").classList.remove("collapsed")
-            document.getElementById("myweb").classList.remove("fullscreened")
-        }
-    });
-    document.getElementById("minimize-btn").addEventListener("click", function () {
-        ipcRenderer.send('app:minimize')
-    });
-    document.getElementById("toggle-fullscreen-btn").addEventListener("click", function (e) {
-        ipcRenderer.send('app:togglefullscreen')
-    });
+    require('./title-bar.js');
+    ipcRenderer.on("app:open-settings", function () {
+        ipcRenderer.send("app:open-settings");
+    })
     // alert-something
     webview.send("initialize");
     ipcRenderer.on("media:playpause", function () {
@@ -104,70 +87,3 @@ webview.addEventListener('ipc-message',function(event){
     console.info(event.channel);
 });
 </script>
-
-<style>
-    body {
-        background-color: #282828;
-    }
-    .title-bar {
-        background-color: #ff0000;
-        display: flex;
-        justify-content: stretch;
-        -webkit-user-select: none;
-        -webkit-app-region: drag;
-        color: #eee;
-    }
-    .title-bar.collapsed {
-        height:16px;
-        position: fixed;
-        padding: 0;
-        width: 100vw;
-        -webkit-app-region: no-drag;
-    }
-    .title-bar.collapsed > div > div:not(#toggle-fullscreen-btn) {
-        display: none;
-    }
-    .title-bar.collapsed:not(:hover) > div > div#toggle-fullscreen-btn {
-        font-size: 16px;
-    }
-    .title-bar, .title-bar.collapsed:hover {
-        height: 24px;
-        width: calc(100vw - 8px);
-        padding: 4px;
-    }
-    .title-bar > div {
-        width: 50%;
-        display: inline-flex;
-    }
-    .title-bar > div:first-child {
-        justify-content: flex-start;
-    }
-    .title-bar > div:last-child {
-        justify-content: flex-end;
-    }
-    .title-bar > div > div {
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        font-size: 24px;
-    }
-    html, body, #myweb {
-        padding: 0;
-        margin: 0;
-        width: 100vw;
-        height: calc(100vh - 32px);
-    }
-    #myweb.fullscreened {
-        height: 100vh;
-    }
-    .window-title {
-        overflow: hidden;
-        line-height: 1.5em;
-        font-family: "Roboto";
-    }
-    .title-bar.collapsed:not(:hover) .window-title {
-        line-height: 1em;
-        font-size: 1em;
-        margin: 0;
-        padding: 0;
-    }
-</style>

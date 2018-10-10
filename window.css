@@ -1,0 +1,65 @@
+
+    body {
+        background-color: #282828;
+    }
+    .title-bar {
+        background-color: #ff0000;
+        display: flex;
+        justify-content: stretch;
+        -webkit-user-select: none;
+        -webkit-app-region: drag;
+        color: #eee;
+    }
+    .title-bar.collapsed {
+        height:16px;
+        position: fixed;
+        padding: 0;
+        width: 100vw;
+        -webkit-app-region: no-drag;
+    }
+    .title-bar.collapsed > div > div:not(#toggle-fullscreen-btn) {
+        display: none;
+    }
+    .title-bar.collapsed:not(:hover) > div > div#toggle-fullscreen-btn {
+        font-size: 16px;
+    }
+    .title-bar, .title-bar.collapsed:hover {
+        height: 24px;
+        width: calc(100vw - 8px);
+        padding: 4px;
+    }
+    .title-bar > div {
+        width: 50%;
+        display: inline-flex;
+    }
+    .title-bar > div:first-child {
+        justify-content: flex-start;
+    }
+    .title-bar > div:last-child {
+        justify-content: flex-end;
+    }
+    .title-bar > div > div {
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+        font-size: 24px;
+    }
+    html, body, #myweb {
+        padding: 0;
+        margin: 0;
+        width: 100vw;
+        height: calc(100vh - 32px);
+    }
+    #myweb.fullscreened {
+        height: 100vh;
+    }
+    .window-title {
+        overflow: hidden;
+        line-height: 1.5em;
+        font-family: "Roboto";
+    }
+    .title-bar.collapsed:not(:hover) .window-title {
+        line-height: 1em;
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
+    }

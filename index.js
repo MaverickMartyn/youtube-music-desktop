@@ -9,6 +9,7 @@ const { autoUpdater } = require("electron-updater")
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
   let win
+  let settingsWin
   
   function createWindow () {
     autoUpdater.checkForUpdatesAndNotify();
@@ -81,20 +82,25 @@ const { autoUpdater } = require("electron-updater")
   })
 
   // Quit app when signal is recieved.
-  ipcMain.on('app:quit', () => { app.quit() })
-  ipcMain.on('app:toggle-maximize', (event, arg) => {
-    if (win.isMaximized()) {
-      win.unmaximize();
+  ipcMain.on('win:quit', (event) => {
+    BrowserWindow.fromWebContents(event.sender).close();
+    // app.quit()
+  })
+  ipcMain.on('win:toggle-maximize', (event) => {
+    var bw = BrowserWindow.fromWebContents(event.sender);
+    if (bw.isMaximized()) {
+      bw.unmaximize();
     }
     else {
-      win.maximize();
+      bw.maximize();
     }
-    event.sender.send("app:toggled-maximize", win.isMaximized());
+    event.sender.send("win:toggled-maximize", bw.isMaximized());
   })
-  ipcMain.on('app:minimize', () => { win.minimize() })
-  ipcMain.on('app:togglefullscreen', (event, arg) => {
-    win.setFullScreen(!win.isFullScreen());
-    event.sender.send("app:toggled-fullscreen", win.isFullScreen());
+  ipcMain.on('win:minimize', (event) => { BrowserWindow.fromWebContents(event.sender).minimize() })
+  ipcMain.on('win:togglefullscreen', (event) => {
+    var bw = BrowserWindow.fromWebContents(event.sender)
+    bw.setFullScreen(!bw.isFullScreen());
+    event.sender.send("win:toggled-fullscreen", bw.isFullScreen());
   })
   
   ipcMain.on('ytm:track-changed', (event, args) => { mmGetLyrics(args).catch((err) => console.log(err)).then((data) => {
@@ -112,3 +118,22 @@ const { autoUpdater } = require("electron-updater")
       createWindow()
     }
   })
+
+  ipcMain.on('app:open-settings', (event, arg) => {
+    createSettingsWindow();
+  })
+
+  function createSettingsWindow () {
+    autoUpdater.checkForUpdatesAndNotify();
+    // Create the browser window.
+    settingsWin = new BrowserWindow({ width: 800, height: 600, frame: false })
+  
+    // and load the index.html of the app.
+    // win.loadURL(`https://music.youtube.com`)
+    settingsWin.loadURL(`file://${__dirname}/windows/settings.html`)
+  
+    // Emitted when the window is closed.
+    settingsWin.on('closed', () => {
+      settingsWin = null
+    })
+  }
