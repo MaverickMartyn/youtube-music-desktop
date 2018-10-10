@@ -1,3 +1,5 @@
+// This script is responsible for creating, and handling interactions with, the window title bar.
+
 document.getElementById("quit-btn").addEventListener("click", function () {
     // Send quit
     ipcRenderer.send('win:quit')

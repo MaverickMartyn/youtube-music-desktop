@@ -1,3 +1,9 @@
+// This file is used to fetch lyrics from MusixMatch.
+
+
+/**
+ *  Gets the MusixMatch lyrics based off of a YouTube Music video code.
+ **/
 exports.mmGetLyrics = function (youTubeId) {
     const axios = require('axios');
     var lyricsId = l(youTubeId);

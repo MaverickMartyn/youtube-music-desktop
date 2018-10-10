@@ -19,12 +19,6 @@
     display: block;
 }
 
-#musix-match-lyrics-btn {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-}
-
 .active-lyric {
     font-size: 3.5em;
     color: #fff;

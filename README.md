@@ -23,3 +23,7 @@ To publish a new release artifact, you need to set `GH_TOKEN` to the GitHub Toke
 Use `[Environment]::SetEnvironmentVariable("GH_TOKEN","<YOUR_TOKEN_HERE>","User")` to do that.
 Then you need to run `yarn run publish`.
 Finally you just need to publish the release on GitHub, through the releases page.
+
+### Disclaimer
+1. I do **NOT** own YouTube Music or MusixMatch, nor am I affiliated or even endorsed by them.
+2. This software is provided as is, with no warranties and/or support guaranteed.

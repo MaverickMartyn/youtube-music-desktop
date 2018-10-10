@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
-const { mmGetLyrics } = require('./musixMatch.js')
+const { mmGetLyrics } = require('./src/musixMatch.js')
 const log = require('electron-log');
 const { autoUpdater } = require("electron-updater")
 
@@ -39,15 +39,6 @@ const { autoUpdater } = require("electron-updater")
     } else {
       console.log('medianexttrack registration bound!');
     }
-  
-    // registered = globalShortcut.register('mediastop', function () {
-    //   win.webContents.send("media:stop");
-    // });
-    // if (!registered) {
-    //   console.log('mediastop registration failed');
-    // } else {
-    //   console.log('mediastop registration bound!');
-    // }
     
     registered = globalShortcut.register('mediaprevioustrack', function () {
       win.webContents.send("media:previous");
@@ -84,7 +75,6 @@ const { autoUpdater } = require("electron-updater")
   // Quit app when signal is recieved.
   ipcMain.on('win:quit', (event) => {
     BrowserWindow.fromWebContents(event.sender).close();
-    // app.quit()
   })
   ipcMain.on('win:toggle-maximize', (event) => {
     var bw = BrowserWindow.fromWebContents(event.sender);
@@ -129,8 +119,7 @@ const { autoUpdater } = require("electron-updater")
     settingsWin = new BrowserWindow({ width: 800, height: 600, frame: false })
   
     // and load the index.html of the app.
-    // win.loadURL(`https://music.youtube.com`)
-    settingsWin.loadURL(`file://${__dirname}/windows/settings.html`)
+    settingsWin.loadURL(`file://${__dirname}/settings.html`)
   
     // Emitted when the window is closed.
     settingsWin.on('closed', () => {

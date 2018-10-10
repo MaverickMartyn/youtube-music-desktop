@@ -2,7 +2,7 @@
     <head>
         <title>YouTube Music for Desktop</title>
         <link href="node_modules/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" />
-        <link href="window.css" rel="stylesheet" />
+        <link href="src/css/window.css" rel="stylesheet" />
     </head>
     <body>
         <div id="title-bar" class="title-bar">
@@ -16,74 +16,9 @@
                 <div id="quit-btn" class="mdi mdi-window-close"></div>
             </div>
         </div>
-        <webview id="myweb" src="https://music.youtube.com" preload="./injector.js"></webview>
+        <webview id="myweb" src="https://music.youtube.com" preload="src/injector.js"></webview>
     </body>
 </html>
 
-<script>
-    const {ipcRenderer} = require('electron');
-    var webview = document.getElementById("myweb");
-    // When everything is ready, trigger the events without problems
-    webview.addEventListener("dom-ready", function() {
-    var path = require('path');
-    var p = path.join(__dirname, '.', 'mm-lyrics.css');
-    var fs = require('fs');
-    fs.readFile(p, 'utf8', function (err, data) {
-        if (err) return console.log(err);
-        webview.insertCSS(data)
-    });
-    var p = path.join(__dirname, '.', 'misc-injected.css');
-    var fs = require('fs');
-    fs.readFile(p, 'utf8', function (err, data) {
-        if (err) return console.log(err);
-        webview.insertCSS(data)
-    });
-    var p = path.join(__dirname, '.', 'images', 'musix-match-logo.base64');
-    fs.readFile(p, 'utf8', function (err, data) {
-        if (err) return console.log(err);
-        webview.send("mm:set-icon", data);
-    });
-    var p = path.join(__dirname, '.', 'images', 'settings.base64');
-    fs.readFile(p, 'utf8', function (err, data) {
-        if (err) return console.log(err);
-        webview.send("app:set-settings-icon", data);
-    });
-
-    // Show devTools if you want
-    //webview.openDevTools();
-    console.log("DOM-Ready, triggering events !");
-    
-    // Aler the scripts src of the website from the <webview>
-    webview.send("request");
-    require('./title-bar.js');
-    ipcRenderer.on("app:open-settings", function () {
-        ipcRenderer.send("app:open-settings");
-    })
-    // alert-something
-    webview.send("initialize");
-    ipcRenderer.on("media:playpause", function () {
-        webview.send("media:playpause");
-    })
-    // ipcRenderer.on("media:stop", function () {
-    //     webview.send("media:stop");
-    // })
-    ipcRenderer.on("media:next", function () {
-        webview.send("media:next");
-    })
-    ipcRenderer.on("media:previous", function () {
-        webview.send("media:previous");
-    })
-    
-    // change-text-element manipulating the DOM
-    // webview.send("change-text-element",{
-    //     id: "placeholder",
-    //     text: "My text"
-    // });
-});
-
-// Process the data from the webview
-webview.addEventListener('ipc-message',function(event){
-    console.log(event);
-    console.info(event.channel);
-});
+<script src="./src/main-window.js">
 </script>
