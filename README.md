@@ -1,5 +1,6 @@
 # YouTube Music for Desktop
 An unofficial desktop client for YouTube Music, with integrated lyrics from MusixMatch. 
+You can check out my other work here: [https://www.codeslasher.com/](https://www.codeslasher.com/)
 
 ### Download
 Download the latest release on [https://github.com/MaverickMartyn/youtube-music-desktop/releases](https://github.com/MaverickMartyn/youtube-music-desktop/releases)
