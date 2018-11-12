@@ -2,8 +2,8 @@
 
 const {ipcRenderer} = require('electron');
 var path = require('path');
+const webview = document.getElementById("myweb");
 require('./src/title-bar.js');
-var webview = document.getElementById("myweb");
 // When everything is ready, trigger the events without problems
 webview.addEventListener("dom-ready", function() {
     // Injects the required CSS and base64 images.

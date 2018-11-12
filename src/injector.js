@@ -1,4 +1,4 @@
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, ipcMain} = require('electron');
 
 // Sets up icons.
 ipcRenderer.on("mm:set-icon", function (event, data) {
@@ -38,6 +38,21 @@ ipcRenderer.on("initialize",function(event,data){
         window.lyrics = JSON.parse(JSON.stringify(args));
         renderLyrics(window.lyrics);
     })
+
+    document.addEventListener('webkitfullscreenchange', function(e) {
+        console.log('Fullscreen set to ' + document.webkitIsFullScreen + '.');
+        ipcRenderer.send("win:toggled-fullscreen", document.webkitIsFullScreen);
+    }, false);
+    
+    document.addEventListener('mozfullscreenchange', function(e) {
+        console.log('Fullscreen set to ' + document.mozIsFullScreen + '.');
+        ipcRenderer.send("win:toggled-fullscreen", document.mozIsFullScreen);
+    }, false);
+    
+    document.addEventListener('fullscreenchange', function(e) {
+        console.log('Fullscreen set to ' + document.fullscreenEnabled + '.');
+        ipcRenderer.send("win:toggled-fullscreen", document.fullscreenEnabled);
+    }, false);
     
     // Gets the current video code by lsitening for changes in the image tag containing the current tracks thumbnail.
     var codeImgTag = document.querySelector("#layout > ytmusic-player-bar > div.middle-controls.style-scope.ytmusic-player-bar > img")

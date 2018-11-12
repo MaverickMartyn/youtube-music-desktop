@@ -17,7 +17,8 @@ ipcRenderer.on('win:toggled-maximize', function(event, isMaximized){
         document.getElementById("maximize-btn").classList.add("mdi-window-maximize")
     }
 });
-ipcRenderer.on('win:toggled-fullscreen', function(event, isFullscreen){
+
+function toggled_fullscreen(event, isFullscreen){
     if (isFullscreen) {
         document.getElementById("title-bar").classList.add("collapsed")
         document.getElementById("myweb").classList.add("fullscreened")
@@ -26,7 +27,11 @@ ipcRenderer.on('win:toggled-fullscreen', function(event, isFullscreen){
         document.getElementById("title-bar").classList.remove("collapsed")
         document.getElementById("myweb").classList.remove("fullscreened")
     }
-});
+    console.log('Fullscreen state changed to '+isFullscreen+'.');
+}
+
+ipcRenderer.on('win:toggled-fullscreen', toggled_fullscreen);
+
 document.getElementById("minimize-btn").addEventListener("click", function () {
     ipcRenderer.send('win:minimize')
 });
@@ -36,3 +41,15 @@ if (fullscreenBtn !== null) {
         ipcRenderer.send('win:togglefullscreen')
     });
 }
+
+// If already in fullscreen, update the title bar to reflect that fact.
+if (window.innerHeight == screen.height) {
+    toggled_fullscreen(null, true)
+}
+
+webview.addEventListener('enter-html-full-screen', function () {
+    ipcRenderer.send('win:toggled-fullscreen', true)
+});
+webview.addEventListener('leave-html-full-screen', function () {
+    ipcRenderer.send('win:toggled-fullscreen', false)
+});

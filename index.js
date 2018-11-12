@@ -87,10 +87,18 @@ const { autoUpdater } = require("electron-updater")
     event.sender.send("win:toggled-maximize", bw.isMaximized());
   })
   ipcMain.on('win:minimize', (event) => { BrowserWindow.fromWebContents(event.sender).minimize() })
-  ipcMain.on('win:togglefullscreen', (event) => {
+  ipcMain.on('win:togglefullscreen', (event, forcedValue) => {
     var bw = BrowserWindow.fromWebContents(event.sender)
-    bw.setFullScreen(!bw.isFullScreen());
+    if (!!forcedValue) {
+      bw.setFullScreen(forcedValue);
+    }
+    else {
+      bw.setFullScreen(!bw.isFullScreen());
+    }
     event.sender.send("win:toggled-fullscreen", bw.isFullScreen());
+  })
+  ipcMain.on('win:toggled-fullscreen', (event, args) => {
+    win.webContents.send("win:toggled-fullscreen", args);
   })
   
   ipcMain.on('ytm:track-changed', (event, args) => { mmGetLyrics(args).catch((err) => console.log(err)).then((data) => {

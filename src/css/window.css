@@ -16,6 +16,10 @@
         padding: 0;
         width: 100vw;
         -webkit-app-region: no-drag;
+        transition: height 1s, margin 1s, padding 1s, opacity 1s, font-size 1s;
+    }
+    div#title-bar.collapsed:not(:hover) {
+        opacity: 0;
     }
     .title-bar.collapsed > div > div:not(#toggle-fullscreen-btn) {
         display: none;
