@@ -1,7 +1,9 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut, dialog } = require('electron')
 const { mmGetLyrics } = require('./src/musixMatch.js')
 const log = require('electron-log');
 const { autoUpdater } = require("electron-updater")
+const Store = require('electron-store');
+const store = new Store();
 
   autoUpdater.logger = log;
   autoUpdater.logger.transports.file.level = 'info';
@@ -12,6 +14,14 @@ const { autoUpdater } = require("electron-updater")
   let settingsWin
   
   function createWindow () {
+    autoUpdater.on('update-downloaded', function (info) {
+      dialog.showMessageBox({title: 'Update '+info.version+' available', buttons: ['Install now', 'Install on next launch'], message: 'An update is available. Do you want to install '+info.version+' now?<br /> '+info.releaseNotes}, function (response) {
+        store.set('last-update-info', info);
+        if (response === 0) {
+          autoUpdater.quitAndInstall(false, true);
+        }
+      })
+    });
     autoUpdater.checkForUpdatesAndNotify();
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600, frame: false })

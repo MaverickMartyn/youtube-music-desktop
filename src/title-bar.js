@@ -47,9 +47,9 @@ if (window.innerHeight == screen.height) {
     toggled_fullscreen(null, true)
 }
 
-webview.addEventListener('enter-html-full-screen', function () {
-    ipcRenderer.send('win:toggled-fullscreen', true)
-});
-webview.addEventListener('leave-html-full-screen', function () {
-    ipcRenderer.send('win:toggled-fullscreen', false)
-});
+// webview.addEventListener('enter-html-full-screen', function () {
+//     ipcRenderer.send('win:toggled-fullscreen', true)
+// });
+// webview.addEventListener('leave-html-full-screen', function () {
+//     ipcRenderer.send('win:toggled-fullscreen', false)
+// });

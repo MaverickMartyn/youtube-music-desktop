@@ -67,3 +67,14 @@
         margin: 0;
         padding: 0;
     }
+
+    div.content {
+        color: white;
+        font-family: sans-serif;
+        padding: 1em;
+    }
+
+    div.content > div {
+        padding: 1em;
+        border: 1px solid grey;
+    }
