@@ -14,9 +14,17 @@ const store = new Store();
   let settingsWin
   
   function createWindow () {
+    if (store.get('last-update-info') === true) {
+      // Show changelog
+      var last_update_info = store.get('last-update-info');
+      dialog.showMessageBox({title: last_update_info.ver + ' changelog', buttons: ['Cool!'], message: info.releaseNotes}, function (response) {
+        store.set('show-changelog-on-startup', false);
+      });
+    }
     autoUpdater.on('update-downloaded', function (info) {
       dialog.showMessageBox({title: 'Update '+info.version+' available', buttons: ['Install now', 'Install on next launch'], message: 'An update is available. Do you want to install '+info.version+' now?<br /> '+info.releaseNotes}, function (response) {
         store.set('last-update-info', info);
+        store.set('show-changelog-on-startup', true);
         if (response === 0) {
           autoUpdater.quitAndInstall(false, true);
         }
