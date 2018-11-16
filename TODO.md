@@ -3,6 +3,7 @@
 * Add settings UI.
 * Add lyrics syncronization "offset slider".
 * Add option to show lyrics "subtitle-style".
+* Add hotkey support.
 * ~Add application icon~.
 * Ensure/Add proper icons for MacOs and Linux.
 * Add proper error handling where needed.
