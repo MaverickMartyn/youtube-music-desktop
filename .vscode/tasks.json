@@ -1,0 +1,22 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    // "tasks": [{
+    //         "label": "webpack-dev-server",
+    //         "command": "webpack-dev-server --hot --colors --config webpack.renderer.config.js --port 9080 --content-base app/dist", // Could be any other shell command
+    //         "type": "shell"
+    //     }
+        // {
+        //     "taskName": "pack",
+        //     "command": "yarn", // Could be any other shell command
+        //     "args": ["pack"],
+        //     "isShellCommand": true
+        // }
+    // ],
+    // "options": {
+    //     "shell": {
+
+    //     }
+    // }
+}
