@@ -1,7 +1,8 @@
 # YouTube Music for Desktop
 An unofficial desktop client for YouTube Music, with integrated lyrics from MusixMatch, and more.
 
-You can check out my other work here: [https://www.codeslasher.com/](https://www.codeslasher.com/)
+You can check out the update progress [over on Trello](https://trello.com/b/wKP18BMv/youtube-music-for-desktop),
+or you can check out my other work here: [https://www.codeslasher.com/](https://www.codeslasher.com/)
 
 ### Download
 Download the latest release on [https://github.com/MaverickMartyn/youtube-music-desktop/releases](https://github.com/MaverickMartyn/youtube-music-desktop/releases)
@@ -17,7 +18,7 @@ Download the latest release on [https://github.com/MaverickMartyn/youtube-music-
 * Last.fm support. <sup>(Coming soon)</sup>
 
 ### Todo:
-See [TODO.md](TODO.md)
+See [TODO.md](TODO.md) or my [Trello Board](https://trello.com/b/wKP18BMv/youtube-music-for-desktop)
 
 ### Build requirements:
 * Yarn package manager (1.9.4+)
