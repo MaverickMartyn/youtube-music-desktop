@@ -1,24 +1,38 @@
 # YouTube Music for Desktop
-An unofficial desktop client for YouTube Music, with integrated lyrics from MusixMatch. 
+An unofficial desktop client for YouTube Music, with integrated lyrics from MusixMatch, and more.
 
 You can check out my other work here: [https://www.codeslasher.com/](https://www.codeslasher.com/)
 
 ### Download
 Download the latest release on [https://github.com/MaverickMartyn/youtube-music-desktop/releases](https://github.com/MaverickMartyn/youtube-music-desktop/releases)
 
-![Animated gif of YouTube Music for Desktop](./images/youtube-music.gif)
+![Animated gif of YouTube Music for Desktop](./youtube-music.gif)
+
+### Features:
+* Integrated lyrics from MusixMatch. <sup>(More coming soon)</sup>
+* Media keys support.
+* Material Design UI using VueJS and VuetifyJS.
+* Cross-platform.
+* Hotkey support. <sup>(Coming soon)</sup>
+* Last.fm support. <sup>(Coming soon)</sup>
 
 ### Todo:
 See [TODO.md](TODO.md)
 
 ### Build requirements:
-* Yarn package manager (1.10.0+)
+* Yarn package manager (1.9.4+)
 * Node (v8.12.0+)
-* Electron (v3.0.2+)
+* Electron (v1.7.9+)
+
+It might work with older versions, but these are the ones I have tested.
 
 ### Build guide
 * Run `yarn run dist`
 * Resulting artifacts are in the ./dist folder.
+
+### Debugging
+This project has full debugging support for the renderer process using Chrome Dev Tools (inspector).
+Full main process debugging is not currently available, due to webpack dev server not running, when debugging main process.
 
 ### Publishing release artefacts
 To publish a new release artifact, you need to set `GH_TOKEN` to the GitHub Token for your fork repo.
