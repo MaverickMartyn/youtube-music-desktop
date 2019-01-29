@@ -1,6 +1,6 @@
 <template>
   <v-layout v-if="this.$store.state.ytm.currentTrack" row text-md-center justify-center>
-    <v-flex :class="'lyrics-popup pa-3' + ((this.showLyricsDialog) ? ' open' : '')">
+    <v-flex ref="lyricsPopup" :class="'lyrics-popup pa-3' + ((this.showLyricsDialog) ? ' open' : '')">
       <p v-for="lyric in lyrics" :ref="'lyricLine' + lyric.id" :key="lyric.id" v-html="lyric._" :class="lyricClass(lyric)"></p>
       <p v-if="!lyrics">No Musixmatch lyrics found</p>
     </v-flex>
@@ -47,6 +47,10 @@
             // Update lyrics using the video id
             console.log('Updated MusixMatch lyrics')
             MusixMatch.mmGetLyrics(newTrack && newTrack.videoId).then((response) => {
+              if (response === '') {
+                this.lyrics = null
+                return
+              }
               var parseString = require('xml2js').parseString
               parseString(response, (err, result) => {
                 if (err) {
@@ -66,9 +70,13 @@
         // console.log(lyric)
         var shouldEmphasize = (Number(lyric.$.start) <= this.$store.state.ytm.currentTrackTime && (Number(lyric.$.start) + Number(lyric.$.dur)) > this.$store.state.ytm.currentTrackTime)
         if (shouldEmphasize) {
-          this.$refs['lyricLine' + lyric.id][0].scrollIntoView()
+          this.$refs['lyricLine' + lyric.id][0].scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+          })
         }
-        return shouldEmphasize ? 'current' : ''
+        return shouldEmphasize ? 'lyric-line current' : 'lyric-line'
       }
     },
     computed: {
@@ -95,9 +103,17 @@
   background: rgba(0, 0, 0, .8);
   overflow-y: scroll;
 }
-.current, .true {
+
+.lyric-line {
   font-size: 2em;
+  color: rgba(255, 255, 255, .5);
 }
+
+.lyric-line.current {
+  font-size: 4em;
+  color: rgba(255, 255, 255, 1);
+}
+
 .open {
   display: block;
 }
