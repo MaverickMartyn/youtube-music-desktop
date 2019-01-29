@@ -28,6 +28,23 @@
         </v-card>
       </v-expansion-panel-content>
       <v-expansion-panel-content :class="(useDarkTheme) ? 'custom-dark' : ''">
+        <div slot="header">Lyrics.ovh</div>
+        <v-card>
+          <v-card-text>
+            <v-checkbox
+              v-on:change="$emit('settings-changed')"
+              v-model="value.lyricsOvh.enabled"
+              label="Enable Lyrics.ovh"
+            ></v-checkbox>
+            <v-checkbox
+              v-on:change="$emit('settings-changed')"
+              v-model="value.lyricsOvh.subtitlesStyle"
+              label="Use subtitle-style lyrics"
+            ></v-checkbox>
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+      <v-expansion-panel-content hidden :class="(useDarkTheme) ? 'custom-dark' : ''">
         <div slot="header">Others</div>
         <v-card>
           <v-card-text>Nothing here yet. :/</v-card-text>

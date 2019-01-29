@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var y = new MutationObserver(function (e) {
           console.log('Track change detected.')
           var titleElement = document.querySelector('.title.style-scope.ytmusic-player-bar')
+          var artistElement = document.querySelector('.byline.style-scope.ytmusic-player-bar.complex-string')
           var artElement = document.querySelector('.image.style-scope.ytmusic-player-bar')
           var videoId = null
           if (artElement.src.indexOf('i.ytimg.com/vi') !== -1) {
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
           ipcRenderer.sendToHost('ytm:trackChanged', {
             title: titleElement.textContent.replace(/\s+/g, ' ').trim(),
+            artist: artistElement.textContent.replace(/\s+/g, ' ').trim(),
             byLine: byLineElement.textContent.replace(/\s+/g, ' ').trim(),
             videoId,
             art: artElement.src,

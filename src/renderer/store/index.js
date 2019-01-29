@@ -12,7 +12,7 @@ export default new Vuex.Store({
   modules,
   plugins: [
     createPersistedState({
-      blacklist: ['ytmIsLoggedIn', 'currentTrack']
+      blacklist: ['ytmIsLoggedIn', 'currentTrack', 'currentTrackTime']
     }),
     createSharedMutations()
   ],

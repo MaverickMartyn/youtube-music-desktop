@@ -1,0 +1,28 @@
+.lyrics-popup{
+    display: none;
+    top: 3.5em;
+    left: 3.5em;
+    right: 3.5em;
+    bottom: 3.5em;
+    position: absolute;
+    background: rgba(0, 0, 0, .8);
+    overflow-y: scroll;
+  }
+  
+  .lyric-line {
+    font-size: 2em;
+    color: rgba(255, 255, 255, .5);
+  }
+  
+  .lyric-line.current {
+    font-size: 4em;
+    color: rgba(255, 255, 255, 1);
+  }
+  
+  .open {
+    display: block;
+  }
+
+  .lyrics-status-message {
+    font-size: 1.8em;
+  }

@@ -7,6 +7,10 @@ const state = {
     musixmatch: {
       enabled: true,
       subtitlesStyle: false
+    },
+    lyricsOvh: {
+      enabled: false,
+      subtitlesStyle: false
     }
   },
   lastfm: {

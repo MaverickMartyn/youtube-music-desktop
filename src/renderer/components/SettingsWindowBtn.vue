@@ -23,15 +23,9 @@
 
 <style lang="scss" scoped>
 .settings-btn {
-  position: absolute;
-  top: 9px;
-  right: 56px;
+  margin-top: 4px;
   width: 32px;
   height: 32px;
   cursor: pointer;
-}
-
-.logged-out {
-  right: calc(56px + 86px);
 }
 </style>
