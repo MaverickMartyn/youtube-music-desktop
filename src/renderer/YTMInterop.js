@@ -26,23 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (byLineElement) {
         console.log('Setting up mutation observer...')
+        updateCurrentTrack(byLineElement, videoTag)
         var y = new MutationObserver(function (e) {
-          console.log('Track change detected.')
-          var titleElement = document.querySelector('.title.style-scope.ytmusic-player-bar')
-          var artistElement = document.querySelector('.byline.style-scope.ytmusic-player-bar.complex-string')
-          var artElement = document.querySelector('.image.style-scope.ytmusic-player-bar')
-          var videoId = null
-          if (artElement.src.indexOf('i.ytimg.com/vi') !== -1) {
-            videoId = artElement.src.split('vi/')[1].split('/')[0]
-          }
-          ipcRenderer.sendToHost('ytm:trackChanged', {
-            title: titleElement.textContent.replace(/\s+/g, ' ').trim(),
-            artist: artistElement.textContent.replace(/\s+/g, ' ').trim(),
-            byLine: byLineElement.textContent.replace(/\s+/g, ' ').trim(),
-            videoId,
-            art: artElement.src,
-            duration: videoTag.duration
-          })
+          updateCurrentTrack(byLineElement, videoTag)
         })
 
         y.observe(byLineElement, {
@@ -99,6 +85,25 @@ document.addEventListener('DOMContentLoaded', function () {
   //   }
   // })
 })
+
+function updateCurrentTrack (byLineElement, videoTag) {
+  console.log('Track change detected.')
+  var titleElement = document.querySelector('.title.style-scope.ytmusic-player-bar')
+  var artistElement = document.querySelector('.byline.style-scope.ytmusic-player-bar.complex-string')
+  var artElement = document.querySelector('.image.style-scope.ytmusic-player-bar')
+  var videoId = null
+  if (artElement.src.indexOf('i.ytimg.com/vi') !== -1) {
+    videoId = artElement.src.split('vi/')[1].split('/')[0]
+  }
+  ipcRenderer.sendToHost('ytm:trackChanged', {
+    title: titleElement.textContent.replace(/\s+/g, ' ').trim(),
+    artist: artistElement.textContent.replace(/\s+/g, ' ').trim(),
+    byLine: byLineElement.textContent.replace(/\s+/g, ' ').trim(),
+    videoId,
+    art: artElement.src,
+    duration: videoTag.duration
+  })
+}
 
 // document.addEventListener('DOMContentLoaded', function () {
 //   // Setup login mutation observer
