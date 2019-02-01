@@ -5,9 +5,10 @@
 </template>
 
 <script>
-  import image from '../assets/mml.png'
+  import image from '../assets/lyrics.ovh.png'
   export default {
     name: 'lyricsovh-lyrics-btn',
+    props: ['isFullscreen'],
     data: function () {
       return {
         icon: image
@@ -26,5 +27,8 @@
   width: 28px;
   height: 28px;
   cursor: pointer;
+}
+.lyric-btn .v-image {
+  border-radius: 100%;
 }
 </style>

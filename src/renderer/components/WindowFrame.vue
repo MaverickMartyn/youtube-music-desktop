@@ -1,6 +1,6 @@
 <template>
   <v-card class="window-frame">
-    <v-card-title class="title-bar red white--text">
+    <v-card-title :class="'title-bar red white--text' + ((isFullscreen) ? ' fullscreen' : '')">
       <span class="title">YouTube Music for Desktop</span>
 
       <v-spacer></v-spacer>
@@ -57,6 +57,11 @@
     data: function () {
       return {
       }
+    },
+    computed: {
+      isFullscreen: function () {
+        return this.$store.state.ytm.isFullscreen
+      }
     }
   }
 </script>
@@ -70,9 +75,31 @@
   -webkit-user-select: none;
   -webkit-app-region: drag;
   height: 32px;
+  transition: padding 1s, height 1s, opacity 1s;
 }
 .clickable {
   -webkit-user-select: auto;
   -webkit-app-region: no-drag;
+}
+
+.title, .v-icon {
+  transition: font-size 1s;
+}
+.title-bar.fullscreen {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999999999;
+}
+
+.title-bar.fullscreen:not(:hover) {
+  height: 2px !important;
+  opacity: 0;
+  padding: 0;
+  .title, .v-icon {
+    font-size: 0 !important;
+  }
 }
 </style>

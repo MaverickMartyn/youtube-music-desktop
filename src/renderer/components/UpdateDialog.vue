@@ -24,7 +24,7 @@
 
   export default {
     name: 'update-dialog',
-    props: ['info'],
+    props: ['info', 'isFullscreen'],
     mounted () {
     },
     data: function () {

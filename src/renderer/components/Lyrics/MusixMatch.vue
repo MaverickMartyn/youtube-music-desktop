@@ -1,10 +1,13 @@
 <template>
-  <v-layout v-if="this.$store.state.ytm.currentTrack" row text-md-center justify-center>
-    <v-flex ref="lyricsPopup" :class="'lyrics-popup pa-3' + ((this.showLyricsDialog) ? ' open' : '')">
-      <p v-for="lyric in lyrics" :ref="'lyricLine' + lyric.id" :key="lyric.id" v-html="lyric._" :class="lyricClass(lyric)"></p>
-      <p v-if="!lyrics" class="lyrics-status-message">{{ status }}</p>
-    </v-flex>
-  </v-layout>
+  <div>
+    <v-layout v-if="this.$store.state.ytm.currentTrack" row text-md-center justify-center>
+      <v-flex ref="lyricsPopup" :class="'lyrics-popup pa-3' + ((this.showLyricsDialog) ? ' open' : '')">
+        <p v-for="lyric in lyrics" :ref="'lyricLine' + lyric.id" :key="lyric.id" v-html="lyric._" :class="lyricClass(lyric)"></p>
+        <p v-if="!lyrics" class="lyrics-status-message">{{ status }}</p>
+      </v-flex>
+    </v-layout>
+    <p v-if="lyrics" class="subtitle-style-lyrics" v-html="emphasizedLine"></p>
+  </div>
 </template>
 
 <script>
@@ -32,7 +35,8 @@
         valid: false,
         showLyricsDialog: false,
         lyrics: null,
-        status: 'No musiXmatch lyrics found'
+        status: 'No musiXmatch lyrics found',
+        emphasizedLine: ''
       }
     },
     methods: {
@@ -78,8 +82,10 @@
         }
         var shouldEmphasize = (Number(lyric.$.start) <= this.$store.state.ytm.currentTrackTime && (Number(lyric.$.start) + Number(lyric.$.dur)) > this.$store.state.ytm.currentTrackTime)
         if (shouldEmphasize) {
-          if (this.$refs['lyricLine' + lyric.id]) {
-            this.$refs['lyricLine' + lyric.id][0].scrollIntoView({
+          this.emphasizedLine = lyric._
+          var line = this.$refs.lyricsPopup.children[lyric.id]
+          if (line) {
+            line.scrollIntoView({
               behavior: 'auto',
               block: 'center',
               inline: 'center'
@@ -95,6 +101,13 @@
       // },
       trackTime: function () {
         return this.$store.state.ytm.currentTrackTime
+      // },
+      // currentLyricLine: function () {
+      //   var that = this
+      //   return this.lyrics.find((element) => {
+      //     // return (element.$.start <= that.trackTime && (element.$.start + element.$.dur) <= that.trackTime)
+      //     return (element.$.start <= that.trackTime)
+      //   })._
       }
     },
     components: {

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <webview id="ytm_webview" src="https://music.youtube.com" :preload="preload"></webview>
-    <v-flex id="ui_buttons" :class="'d-flex' + ((!this.isLoggedIn) ? ' btns-logged-out' : '')">
+    <webview id="ytm_webview" :class="(this.isFullscreen) ? ' fullscreen' : ''" src="https://music.youtube.com" :preload="preload"></webview>
+    <v-flex :class="'d-flex ui_buttons' + ((!this.isLoggedIn) ? ' btns-logged-out' : '') + ((this.isHtml5Fullscreen) ? ' htmlfullscreen' : '') + ((!this.displayFullscreenVideoControls) ? ' hidden' : '')">
       <lyricsovh-lyrics-btn v-if="isLyricsOvhLyricsEnabled" @lyricsovh-toggle-lyrics="lyricsOvhToggle"></lyricsovh-lyrics-btn>
       <musixmatch-lyrics-btn v-if="isMusixMatchEnabled" @musixmatch-toggle-lyrics="musixMatchToggle"></musixmatch-lyrics-btn>
       <settings-window-btn></settings-window-btn>
@@ -50,6 +50,15 @@
       },
       isLyricsOvhLyricsEnabled: function () {
         return this.$store.state.settings.lyrics.lyricsOvh.enabled
+      },
+      isFullscreen: function () {
+        return this.$store.state.ytm.isFullscreen
+      },
+      isHtml5Fullscreen: function () {
+        return this.$store.state.ytm.isHtml5Fullscreen
+      },
+      displayFullscreenVideoControls: function () {
+        return this.$store.state.ytm.displayFullscreenVideoControls
       }
     },
     components: {
@@ -82,8 +91,11 @@
       width: 100vw;
       height: calc(100vh - 32px);
     }
+    #ytm_webview.fullscreen {
+      height: 100vh;
+    }
   }
-  #ui_buttons {
+  .ui_buttons {
     position: absolute;
     top: 9px;
     right: 56px;
@@ -91,12 +103,20 @@
     flex-direction: row;
     justify-content: flex-end;
   }
+  .ui_buttons.htmlfullscreen {
+    bottom: 21px;
+    top: unset;
+    right: 227px;
+  }
 
-  #ui_buttons > div {
+  .ui_buttons > div {
     max-width: fit-content;
   }
 
-  .btns-logged-out {
+  .btns-logged-out:not(.htmlfullscreen) {
     right: calc(56px + 96px) !important;
+  }
+  .ui_buttons.hidden.htmlfullscreen {
+    display: none !important;
   }
 </style>

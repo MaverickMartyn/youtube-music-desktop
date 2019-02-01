@@ -14,6 +14,10 @@ ipcMain.on('ytm:isLoggedInChanged', function (e, isLoggedIn) {
   // console.log('setIsLoggedIn should now be ' + isLoggedIn)
 })
 
+ipcMain.on('ytm:displayFullscreenVideoControlsChanged', function (e, displayFullscreenVideoControls) {
+  store.dispatch('setDisplayFullscreenVideoControls', displayFullscreenVideoControls)
+})
+
 ipcMain.on('ytm:play', function (e, args) {
   store.dispatch('setIsPlaying', true)
   // console.log('isPlaying should now be true')
@@ -34,6 +38,10 @@ ipcMain.on('ytm:trackChanged', function (e, args) {
   store.dispatch('setCurrentTrack', args)
   // console.log('Current track:')
   // console.log(args)
+})
+
+ipcMain.on('ytm:updateVideoBounds', function (e, videoBounds) {
+  store.dispatch('setVideoBounds', videoBounds)
 })
 
 // ipcRenderer.send('console-log', 'test', 'test2')

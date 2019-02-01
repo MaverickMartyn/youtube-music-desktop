@@ -26,3 +26,13 @@
   .lyrics-status-message {
     font-size: 1.8em;
   }
+
+  .subtitle-style-lyrics {
+    position: absolute;
+    /* left: 256px;
+    bottom: 300px; */
+    font-size: 1.5em;
+    font-weight: 600;
+    text-align: center;
+    -webkit-text-stroke: 1px black;
+  }

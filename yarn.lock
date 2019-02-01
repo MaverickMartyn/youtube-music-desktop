@@ -2318,8 +2318,8 @@ concat-stream@1.6.2, concat-stream@^1.5.0, concat-stream@^1.5.2, concat-stream@^
     typedarray "^0.0.6"
 
 conf@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/conf/-/conf-2.1.0.tgz#43ade5879a82ff23dbeb466995d50209f7dfcd07"
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/conf/-/conf-2.2.0.tgz#ee282efafc1450b61e205372041ad7d866802d9a"
   dependencies:
     dot-prop "^4.1.0"
     env-paths "^1.0.0"
@@ -9167,9 +9167,9 @@ vuetify@^1.3.0:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.3.8.tgz#e56832f40e5043470e2100a1501463d5a1ca6d8e"
 
-vuex-electron@^1.0.3:
+"vuex-electron@https://github.com/MaverickMartyn/vuex-electron":
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/vuex-electron/-/vuex-electron-1.0.3.tgz#c8ce0fd06ed9d3beb8881bce39bf76c9fcdc5611"
+  resolved "https://github.com/MaverickMartyn/vuex-electron#167d1de4a7ac913572b5ef86c1ba03572c638471"
   dependencies:
     deepmerge "^2.1.1"
     electron-store "^2.0.0"

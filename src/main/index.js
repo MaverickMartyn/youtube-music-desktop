@@ -37,6 +37,22 @@ function createWindow () {
   mainWindow.loadURL(winURL)
 
   mainWindow.once('ready-to-show', () => {
+    mainWindow.on('enter-html-full-screen', function () {
+      console.log('Entered full screen from HTML5 API')
+      store.dispatch('setHtml5Fullscreen', true)
+    })
+    mainWindow.on('enter-full-screen', function () {
+      console.log('Entered full screen from Electron')
+      store.dispatch('setFullscreen', true)
+    })
+    mainWindow.on('leave-html-full-screen', function () {
+      console.log('Left full screen from HTML5 API')
+      store.dispatch('setHtml5Fullscreen', false)
+    })
+    mainWindow.on('leave-full-screen', function () {
+      console.log('Left full screen from Electron')
+      store.dispatch('setFullscreen', false)
+    })
     mainWindow.show()
   })
 
@@ -81,7 +97,6 @@ ipcMain.on('win:togglefullscreen', (event, forcedValue) => {
     bw.setFullScreen(forcedValue)
   } else {
     bw.setFullScreen(!bw.isFullScreen())
-    console.log(store.state)
   }
   event.sender.send('win:toggled-fullscreen', bw.isFullScreen())
 })

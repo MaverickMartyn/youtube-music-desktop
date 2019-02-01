@@ -2,8 +2,24 @@ const {ipcRenderer} = require('electron')
 // const {observe} = require('selector-observer')
 
 document.addEventListener('DOMContentLoaded', function () {
+  var layoutElementReadyLoop = setInterval(function () {
+    // Setup fullscreen-controls mutation observer
+    var layoutElement = document.getElementById('layout')
+    if (layoutElement) {
+      var DFVCObserver = new MutationObserver(function (e) {
+        ipcRenderer.sendToHost('ytm:displayFullscreenVideoControlsChanged', layoutElement.hasAttribute('show-fullscreen-controls_'))
+      })
+
+      DFVCObserver.observe(layoutElement, {
+        attributes: true,
+        attributeFilter: ['show-fullscreen-controls_']
+      })
+      clearInterval(layoutElementReadyLoop)
+    }
+  }, 300)
   var videoTagReadyLoop = setInterval(function () {
     var videoTag = document.querySelector('#movie_player > div.html5-video-container > video')
+
     if (videoTag !== null) {
       // Setup login mutation observer
       var loginMenuElement = document.querySelector('.center-content.style-scope.ytmusic-nav-bar')
@@ -66,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
       videoTag.addEventListener('timeupdate', function () {
         // this.$store
         ipcRenderer.sendToHost('ytm:timeupdated', videoTag.currentTime)
+        ipcRenderer.sendToHost('ytm:updateVideoBounds', videoTag.getBoundingClientRect())
         console.log('timeupdated')
       })
 
