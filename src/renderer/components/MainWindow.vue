@@ -4,7 +4,7 @@
     <v-flex :class="'d-flex ui_buttons' + ((!this.isLoggedIn) ? ' btns-logged-out' : '') + ((this.isHtml5Fullscreen) ? ' htmlfullscreen' : '') + ((!this.displayFullscreenVideoControls) ? ' hidden' : '')">
       <lyricsovh-lyrics-btn v-if="isLyricsOvhLyricsEnabled" @lyricsovh-toggle-lyrics="lyricsOvhToggle"></lyricsovh-lyrics-btn>
       <musixmatch-lyrics-btn v-if="isMusixMatchEnabled" @musixmatch-toggle-lyrics="musixMatchToggle"></musixmatch-lyrics-btn>
-      <settings-window-btn></settings-window-btn>
+      <settings-window-btn @toggle-show-settings="toggleShowSettings"></settings-window-btn>
     </v-flex>
     <musixmatch-lyrics ref="musixMatchLyrics" v-if="isMusixMatchEnabled"></musixmatch-lyrics>
     <lyricsovh-lyrics ref="lyricsOvhLyrics" v-if="isLyricsOvhLyricsEnabled"></lyricsovh-lyrics>
@@ -12,74 +12,77 @@
 </template>
 
 <script>
-  import MusixMatchBtn from './MusixMatchLyricsBtn.vue'
-  import LyricsOvhLyricsBtn from './LyricsOvhLyricsBtn.vue'
-  import SettingsWindowBtn from './SettingsWindowBtn.vue'
-  import MusixMatchLyrics from './Lyrics/MusixMatch'
-  import LyricsOvhLyrics from './Lyrics/LyricsOvhLyrics'
-  // const { ipcRenderer } = require('electron')
+import MusixMatchBtn from './MusixMatchLyricsBtn.vue'
+import LyricsOvhLyricsBtn from './LyricsOvhLyricsBtn.vue'
+import SettingsWindowBtn from './SettingsWindowBtn.vue'
+import MusixMatchLyrics from './Lyrics/MusixMatch'
+import LyricsOvhLyrics from './Lyrics/LyricsOvhLyrics'
+// const { ipcRenderer } = require('electron')
 
-  export default {
-    name: 'main-window',
-    mounted () {
-      var webview = document.getElementById('ytm_webview')
-      var that = this
-      webview.addEventListener('ipc-message', function (event) {
-        // console.log(event.channel + ' with args:')
-        // console.log(event.args)
-        var args = event.args
-        that.$electron.ipcRenderer.send(event.channel, ...args)
-        // if (event.channel === 'isLoggedInChanged') {
-        //   console.log('Setting isloggedin to ' + event.args[0])
+export default {
+  name: 'main-window',
+  mounted () {
+    var webview = document.getElementById('ytm_webview')
+    var that = this
+    webview.addEventListener('ipc-message', function (event) {
+      // console.log(event.channel + ' with args:')
+      // console.log(event.args)
+      var args = event.args
+      that.$electron.ipcRenderer.send(event.channel, ...args)
+      // if (event.channel === 'isLoggedInChanged') {
+      //   console.log('Setting isloggedin to ' + event.args[0])
 
-        //   that.$store._modules.root._children.ytm.context.dispatch('setIsLoggedIn', event.args[0])
-        // }
-      })
+      //   that.$store._modules.root._children.ytm.context.dispatch('setIsLoggedIn', event.args[0])
+      // }
+    })
+  },
+  data: function () {
+    return {
+      preload: `file:${require('path').resolve(__dirname, '../YTMInterop.js')}`
+    }
+  },
+  computed: {
+    isLoggedIn: function () {
+      return this.$store.state.ytm.ytmIsLoggedIn
     },
-    data: function () {
-      return {
-        preload: `file:${require('path').resolve(__dirname, '../YTMInterop.js')}`
-      }
+    isMusixMatchEnabled: function () {
+      return this.$store.state.settings.lyrics.musixmatch.enabled
     },
-    computed: {
-      isLoggedIn: function () {
-        return this.$store.state.ytm.ytmIsLoggedIn
-      },
-      isMusixMatchEnabled: function () {
-        return this.$store.state.settings.lyrics.musixmatch.enabled
-      },
-      isLyricsOvhLyricsEnabled: function () {
-        return this.$store.state.settings.lyrics.lyricsOvh.enabled
-      },
-      isFullscreen: function () {
-        return this.$store.state.ytm.isFullscreen
-      },
-      isHtml5Fullscreen: function () {
-        return this.$store.state.ytm.isHtml5Fullscreen
-      },
-      displayFullscreenVideoControls: function () {
-        return this.$store.state.ytm.displayFullscreenVideoControls
-      }
+    isLyricsOvhLyricsEnabled: function () {
+      return this.$store.state.settings.lyrics.lyricsOvh.enabled
     },
-    components: {
-      'musixmatch-lyrics-btn': MusixMatchBtn,
-      'lyricsovh-lyrics-btn': LyricsOvhLyricsBtn,
-      'settings-window-btn': SettingsWindowBtn,
-      'musixmatch-lyrics': MusixMatchLyrics,
-      'lyricsovh-lyrics': LyricsOvhLyrics
+    isFullscreen: function () {
+      return this.$store.state.ytm.isFullscreen
     },
-    methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      },
-      musixMatchToggle () {
-        this.$refs.musixMatchLyrics.toggle()
-      },
-      lyricsOvhToggle () {
-        this.$refs.lyricsOvhLyrics.toggle()
-      }
+    isHtml5Fullscreen: function () {
+      return this.$store.state.ytm.isHtml5Fullscreen
+    },
+    displayFullscreenVideoControls: function () {
+      return this.$store.state.ytm.displayFullscreenVideoControls
+    }
+  },
+  components: {
+    'musixmatch-lyrics-btn': MusixMatchBtn,
+    'lyricsovh-lyrics-btn': LyricsOvhLyricsBtn,
+    'settings-window-btn': SettingsWindowBtn,
+    'musixmatch-lyrics': MusixMatchLyrics,
+    'lyricsovh-lyrics': LyricsOvhLyrics
+  },
+  methods: {
+    open (link) {
+      this.$electron.shell.openExternal(link)
+    },
+    musixMatchToggle () {
+      this.$refs.musixMatchLyrics.toggle()
+    },
+    lyricsOvhToggle () {
+      this.$refs.lyricsOvhLyrics.toggle()
+    },
+    toggleShowSettings () {
+      this.$emit('toggle-show-settings')
     }
   }
+}
 </script>
 
 <style lang="scss">

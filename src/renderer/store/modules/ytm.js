@@ -43,28 +43,28 @@ const mutations = {
 }
 
 const actions = {
-  setIsLoggedIn: ({commit}, payLoad) => {
+  setIsLoggedIn: ({ commit }, payLoad) => {
     commit('YTM_SET_IS_LOGGED_IN', payLoad)
   },
-  setIsPlaying: ({commit}, payLoad) => {
+  setIsPlaying: ({ commit }, payLoad) => {
     commit('YTM_SET_IS_PLAYING', payLoad)
   },
-  setCurrentTrack: ({commit}, payLoad) => {
+  setCurrentTrack: ({ commit }, payLoad) => {
     commit('YTM_SET_CURRENT_TRACK', payLoad)
   },
-  setCurrentTrackTime: ({commit}, payLoad) => {
+  setCurrentTrackTime: ({ commit }, payLoad) => {
     commit('YTM_SET_CURRENT_TRACK_TIME', payLoad)
   },
-  setFullscreen: ({commit}, payLoad) => {
+  setFullscreen: ({ commit }, payLoad) => {
     commit('YTM_SET_FULLSCREEN', payLoad)
   },
-  setHtml5Fullscreen: ({commit}, payLoad) => {
+  setHtml5Fullscreen: ({ commit }, payLoad) => {
     commit('YTM_SET_HTML5_FULLSCREEN', payLoad)
   },
-  setDisplayFullscreenVideoControls: ({commit}, payLoad) => {
+  setDisplayFullscreenVideoControls: ({ commit }, payLoad) => {
     commit('YTM_SET_DISPLAY_FULLSCREEN_VIDEO_CONTROLS', payLoad)
   },
-  setVideoBounds: ({commit}, payLoad) => {
+  setVideoBounds: ({ commit }, payLoad) => {
     commit('YTM_SET_VIDEO_BOUNDS', JSON.parse(JSON.stringify(payLoad)))
   }
 }

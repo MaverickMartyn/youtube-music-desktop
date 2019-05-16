@@ -5,7 +5,7 @@
       dark
       tabs
     >
-      <v-btn icon dark to="/">
+      <v-btn icon dark v-on:click="$emit('toggle-show-settings')">
         <v-icon>arrow_back</v-icon>
       </v-btn>
 
@@ -83,72 +83,72 @@
 </template>
 
 <script>
-  import GeneralSettingsTab from './SettingsTabs/GeneralSettingsTab'
-  import LyricsSettingsTab from './SettingsTabs/LyricsSettingsTab'
-  import LastFMSettingsTab from './SettingsTabs/LastFMSettingsTab'
-  import HotkeysSettingsTab from './SettingsTabs/HotkeysSettingsTab'
-  import AboutSettingsTab from './SettingsTabs/AboutSettingsTab'
-  import { mapGetters } from 'vuex'
+import GeneralSettingsTab from './SettingsTabs/GeneralSettingsTab'
+import LyricsSettingsTab from './SettingsTabs/LyricsSettingsTab'
+import LastFMSettingsTab from './SettingsTabs/LastFMSettingsTab'
+import HotkeysSettingsTab from './SettingsTabs/HotkeysSettingsTab'
+import AboutSettingsTab from './SettingsTabs/AboutSettingsTab'
+import { mapGetters } from 'vuex'
 
-  export default {
-    data: () => ({
-      currentItem: 'General',
-      tabs: [
-        {
-          name: 'General',
-          enabled: true,
-          settingsKey: 'general',
-          component: GeneralSettingsTab
-        },
-        {
-          name: 'Lyrics',
-          enabled: true,
-          settingsKey: 'lyrics',
-          component: LyricsSettingsTab
-        },
-        {
-          name: 'Last.FM',
-          enabled: false,
-          settingsKey: 'lastfm',
-          component: LastFMSettingsTab
-        },
-        {
-          name: 'Hotkeys',
-          enabled: false,
-          settingsKey: 'hotkeys',
-          component: HotkeysSettingsTab
-        },
-        {
-          name: 'About',
-          enabled: true,
-          settingsKey: 'about',
-          component: AboutSettingsTab
-        }
-      ]
-      // items: [
-      //   'General', 'Lyrics', 'Last.FM', 'About'
-      // ],
-      // more: [
-      // ],
-      // more: [
-      //   'News', 'Maps', 'Books', 'Flights', 'Apps'
-      // ],
-      // text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }),
-
-    computed: {
-      // mix the getters into computed with object spread operator
-      ...mapGetters([
-        'settings'
-        // ...
-      ])
-    },
-
-    methods: {
-      save: function (item) {
-        // console.log('Saving...')
-        this.$store.dispatch('updateSettings', { field: item.settingsKey, value: this.settings[item.settingsKey] })
+export default {
+  data: () => ({
+    currentItem: 'General',
+    tabs: [
+      {
+        name: 'General',
+        enabled: true,
+        settingsKey: 'general',
+        component: GeneralSettingsTab
+      },
+      {
+        name: 'Lyrics',
+        enabled: true,
+        settingsKey: 'lyrics',
+        component: LyricsSettingsTab
+      },
+      {
+        name: 'Last.FM',
+        enabled: false,
+        settingsKey: 'lastfm',
+        component: LastFMSettingsTab
+      },
+      {
+        name: 'Hotkeys',
+        enabled: false,
+        settingsKey: 'hotkeys',
+        component: HotkeysSettingsTab
+      },
+      {
+        name: 'About',
+        enabled: true,
+        settingsKey: 'about',
+        component: AboutSettingsTab
       }
+    ]
+    // items: [
+    //   'General', 'Lyrics', 'Last.FM', 'About'
+    // ],
+    // more: [
+    // ],
+    // more: [
+    //   'News', 'Maps', 'Books', 'Flights', 'Apps'
+    // ],
+    // text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+  }),
+
+  computed: {
+    // mix the getters into computed with object spread operator
+    ...mapGetters([
+      'settings'
+      // ...
+    ])
+  },
+
+  methods: {
+    save: function (item) {
+      // console.log('Saving...')
+      this.$store.dispatch('updateSettings', { field: item.settingsKey, value: this.settings[item.settingsKey] })
     }
   }
+}
 </script>

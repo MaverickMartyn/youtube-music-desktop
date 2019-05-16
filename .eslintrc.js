@@ -1,18 +1,24 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
   parserOptions: {
-    sourceType: 'module'
+    parser: 'babel-eslint',
+    sourceType: 'module',
+    "ecmaVersion": 6,
   },
   env: {
     browser: true,
     node: true
   },
-  extends: 'standard',
+  extends: [
+    'standard',
+    '@vue/standard',
+    'plugin:vue/essential'
+  ],
   globals: {
     __static: true
   },
   plugins: [
+    "vue",
     'html'
   ],
   'rules': {

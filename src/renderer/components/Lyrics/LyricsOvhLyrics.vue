@@ -8,72 +8,72 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  // import { scrollToSmoothly } from './../../AutoScroller.js'
+import axios from 'axios'
+// import { scrollToSmoothly } from './../../AutoScroller.js'
 
-  export default {
-    name: 'lyricsovh-lyrics',
-    props: ['value'],
-    mounted () {
-      // Watch for changes to the current track
-      this.$store.watch(
-        (state) => {
-          return this.$store.state.ytm.currentTrack // could also put a Getter here
-        },
-        (newTrack, oldTrack) => {
-          this.updateLyrics(newTrack)
-        }
-      )
-    },
-    data: function () {
-      return {
-        valid: false,
-        showLyricsDialog: false,
-        lyrics: null,
-        status: 'No Lyrics.ovh lyrics found'
-      }
-    },
-    methods: {
-      toggle: function () {
-        this.showLyricsDialog = !this.showLyricsDialog
-        if (this.showLyricsDialog) {
-          this.updateLyrics(this.$store.state.ytm.currentTrack)
-        }
+export default {
+  name: 'lyricsovh-lyrics',
+  props: ['value'],
+  mounted () {
+    // Watch for changes to the current track
+    this.$store.watch(
+      (state) => {
+        return this.$store.state.ytm.currentTrack // could also put a Getter here
       },
-      updateLyrics (newTrack) {
-        if (newTrack !== null) {
-          // Update lyrics using the video id
-          console.log('Updated Lyrics.ovh lyrics')
-          this.lyrics = null
-          this.status = 'Getting your Lyrics.ovh lyrics...'
-          axios.get('https://api.lyrics.ovh/v1/' + newTrack.artist + '/' + newTrack.title)
-            .then((response) => {
-              this.lyrics = response.data.lyrics.split('\n')
-              for (let i = 0; i < this.lyrics.length; i++) {
-                this.lyrics[i] = { id: i, text: this.lyrics[i] }
-              }
-              // console.log(this.$refs.lyricsPopup.scrollHeight)
-              // window.testtest = this.$refs.lyricsPopup this.$refs['lyricLine' + this.lyrics[this.lyrics.length-1].id][0]
-              // scrollToSmoothly(this.$refs.lyricsPopup.scrollHeight, 100)
-            }).catch(() => {
-              this.status = 'No Lyrics.ovh lyrics found'
-            })
-        }
+      (newTrack, oldTrack) => {
+        this.updateLyrics(newTrack)
       }
-    },
-    computed: {
-      trackTime: function () {
-        return this.$store.state.ytm.currentTrackTime
-      }
-    },
-    components: {
+    )
+  },
+  data: function () {
+    return {
+      valid: false,
+      showLyricsDialog: false,
+      lyrics: null,
+      status: 'No Lyrics.ovh lyrics found'
     }
+  },
+  methods: {
+    toggle: function () {
+      this.showLyricsDialog = !this.showLyricsDialog
+      if (this.showLyricsDialog) {
+        this.updateLyrics(this.$store.state.ytm.currentTrack)
+      }
+    },
+    updateLyrics (newTrack) {
+      if (newTrack !== null) {
+        // Update lyrics using the video id
+        console.log('Updated Lyrics.ovh lyrics')
+        this.lyrics = null
+        this.status = 'Getting your Lyrics.ovh lyrics...'
+        axios.get('https://api.lyrics.ovh/v1/' + newTrack.artist + '/' + newTrack.title)
+          .then((response) => {
+            this.lyrics = response.data.lyrics.split('\n')
+            for (let i = 0; i < this.lyrics.length; i++) {
+              this.lyrics[i] = { id: i, text: this.lyrics[i] }
+            }
+            // console.log(this.$refs.lyricsPopup.scrollHeight)
+            // window.testtest = this.$refs.lyricsPopup this.$refs['lyricLine' + this.lyrics[this.lyrics.length-1].id][0]
+            // scrollToSmoothly(this.$refs.lyricsPopup.scrollHeight, 100)
+          }).catch(() => {
+            this.status = 'No Lyrics.ovh lyrics found'
+          })
+      }
+    }
+  },
+  computed: {
+    trackTime: function () {
+      return this.$store.state.ytm.currentTrackTime
+    }
+  },
+  components: {
   }
+}
 </script>
 
 <style scoped>
   @import './../../assets/lyrics.css';
-  
+
   .lyric-line {
     color: rgba(255, 255, 255, 1);
   }

@@ -14,32 +14,32 @@
 </template>
 
 <script>
-  export default {
-    name: 'about-settings',
-    props: ['value'],
-    mounted () {
-    },
-    data: function () {
-      return {
-        valid: false
-      }
-    },
-    computed: {
-      useDarkTheme: function () {
-        return this.$store.getters.settings.general.darkMode
-      }
-    },
-    methods: {
-    },
-    components: {
+export default {
+  name: 'about-settings',
+  props: ['value'],
+  mounted () {
+  },
+  data: function () {
+    return {
+      valid: false
     }
+  },
+  computed: {
+    useDarkTheme: function () {
+      return this.$store.getters.settings.general.darkMode
+    }
+  },
+  methods: {
+  },
+  components: {
   }
-  // about: {
-  //   version: '2.1',
-  //   author: 'Martyn Aaby Finnerup',
-  //   releaseNotes: '<p>Test release.<br />Not a real release.</p>',
-  //   releaseDate: '12/05/2018'
-  // }
+}
+// about: {
+//   version: '2.1',
+//   author: 'Martyn Aaby Finnerup',
+//   releaseNotes: '<p>Test release.<br />Not a real release.</p>',
+//   releaseDate: '12/05/2018'
+// }
 </script>
 
 <style>

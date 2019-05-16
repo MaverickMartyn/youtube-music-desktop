@@ -15,36 +15,36 @@
 </template>
 
 <script>
-  // import { app, BrowserWindow, ipcMain } from 'electron'
-  // import { autoUpdater } from 'electron-updater'
-  // const log = require('electron-log')
+// import { app, BrowserWindow, ipcMain } from 'electron'
+// import { autoUpdater } from 'electron-updater'
+// const log = require('electron-log')
 
-  // autoUpdater.logger = log
-  // autoUpdater.logger.transports.file.level = 'info'
+// autoUpdater.logger = log
+// autoUpdater.logger.transports.file.level = 'info'
 
-  export default {
-    name: 'update-dialog',
-    props: ['info', 'isFullscreen'],
-    mounted () {
-    },
-    data: function () {
-      return {
-        dialog: false
-      }
-    },
-    methods: {
-      show: function (infoObject) {
-        this.info = infoObject
-        this.dialog = true
-      },
-      update: function () {
-        this.dialog = false
-        this.$electron.send('update:update-now')
-      }
-    },
-    components: {
+export default {
+  name: 'update-dialog',
+  props: ['info', 'isFullscreen'],
+  mounted () {
+  },
+  data: function () {
+    return {
+      dialog: false
     }
+  },
+  methods: {
+    show: function (infoObject) {
+      this.info = infoObject
+      this.dialog = true
+    },
+    update: function () {
+      this.dialog = false
+      this.$electron.send('update:update-now')
+    }
+  },
+  components: {
   }
+}
 </script>
 
 <style>

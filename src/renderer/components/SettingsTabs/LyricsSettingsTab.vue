@@ -11,13 +11,14 @@
       expand
     >
       <v-expansion-panel-content :class="(useDarkTheme) ? 'custom-dark' : ''">
-        <div slot="header">MusixMatch</div>
+        <div slot="header">MusixMatch (Broken - To be fixed)</div>
         <v-card>
           <v-card-text>
             <v-checkbox
               v-on:change="$emit('settings-changed')"
               v-model="value.musixmatch.enabled"
-              label="Enable MusixMatch Lyrics"
+              disabled
+              label="Enable MusixMatch Lyrics (Broken - To be fixed)"
             ></v-checkbox>
             <v-checkbox
               v-on:change="$emit('settings-changed')"
@@ -60,26 +61,26 @@
 </template>
 
 <script>
-  export default {
-    name: 'lyrics-settings',
-    props: ['value'],
-    mounted () {
-    },
-    data: function () {
-      return {
-        valid: false
-      }
-    },
-    methods: {
-    },
-    computed: {
-      useDarkTheme: function () {
-        return this.$store.getters.settings.general.darkMode
-      }
-    },
-    components: {
+export default {
+  name: 'lyrics-settings',
+  props: ['value'],
+  mounted () {
+  },
+  data: function () {
+    return {
+      valid: false
     }
+  },
+  methods: {
+  },
+  computed: {
+    useDarkTheme: function () {
+      return this.$store.getters.settings.general.darkMode
+    }
+  },
+  components: {
   }
+}
 </script>
 
 <style>

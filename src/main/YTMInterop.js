@@ -18,6 +18,10 @@ ipcMain.on('ytm:displayFullscreenVideoControlsChanged', function (e, displayFull
   store.dispatch('setDisplayFullscreenVideoControls', displayFullscreenVideoControls)
 })
 
+ipcMain.on('ytm:setFullscreen', function (e, isFullscreen) {
+  store.dispatch('setHtml5Fullscreen', isFullscreen)
+})
+
 ipcMain.on('ytm:play', function (e, args) {
   store.dispatch('setIsPlaying', true)
   // console.log('isPlaying should now be true')

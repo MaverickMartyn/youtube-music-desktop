@@ -37,18 +37,18 @@ function createWindow () {
   mainWindow.loadURL(winURL)
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.on('enter-html-full-screen', function () {
-      console.log('Entered full screen from HTML5 API')
-      store.dispatch('setHtml5Fullscreen', true)
-    })
+    // mainWindow.on('enter-html-full-screen', function () {
+    //   console.log('Entered full screen from HTML5 API')
+    //   store.dispatch('setHtml5Fullscreen', true)
+    // })
     mainWindow.on('enter-full-screen', function () {
       console.log('Entered full screen from Electron')
       store.dispatch('setFullscreen', true)
     })
-    mainWindow.on('leave-html-full-screen', function () {
-      console.log('Left full screen from HTML5 API')
-      store.dispatch('setHtml5Fullscreen', false)
-    })
+    // mainWindow.on('leave-html-full-screen', function () {
+    //   console.log('Left full screen from HTML5 API')
+    //   store.dispatch('setHtml5Fullscreen', false)
+    // })
     mainWindow.on('leave-full-screen', function () {
       console.log('Left full screen from Electron')
       store.dispatch('setFullscreen', false)
@@ -92,6 +92,7 @@ ipcMain.on('win:toggle-maximize', (event) => {
 })
 ipcMain.on('win:minimize', (event) => { console.log('Minimizing.'); BrowserWindow.fromWebContents(event.sender).minimize() })
 ipcMain.on('win:togglefullscreen', (event, forcedValue) => {
+  console.log('Asked to toggle fullscreen.')
   var bw = BrowserWindow.fromWebContents(event.sender)
   if (forcedValue) {
     bw.setFullScreen(forcedValue)

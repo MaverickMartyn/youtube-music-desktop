@@ -52,18 +52,18 @@
 </template>
 
 <script>
-  export default {
-    name: 'window-frame',
-    data: function () {
-      return {
-      }
-    },
-    computed: {
-      isFullscreen: function () {
-        return this.$store.state.ytm.isFullscreen
-      }
+export default {
+  name: 'window-frame',
+  data: function () {
+    return {
+    }
+  },
+  computed: {
+    isFullscreen: function () {
+      return this.$store.state.ytm.isFullscreen
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

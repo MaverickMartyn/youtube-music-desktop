@@ -41,7 +41,7 @@ const mutations = {
   UPDATE_ABOUT (state, newSettings) {
     Object.assign(state.about, newSettings)
   },
-  UPDATE_SETTINGS: function (state, {field, value}) {
+  UPDATE_SETTINGS: function (state, { field, value }) {
     Object.assign(state, {
       [field]: value
     })
@@ -49,19 +49,19 @@ const mutations = {
 }
 
 const actions = {
-  updateGeneral: ({commit}, payLoad) => {
+  updateGeneral: ({ commit }, payLoad) => {
     commit('UPDATE_GENERAL', payLoad)
   },
-  updateLyrics: ({commit}, payLoad) => {
+  updateLyrics: ({ commit }, payLoad) => {
     commit('UPDATE_LYRICS', payLoad)
   },
-  updateLastFM: ({commit}, payLoad) => {
+  updateLastFM: ({ commit }, payLoad) => {
     commit('UPDATE_LASTFM', payLoad)
   },
-  updateAbout: ({commit}, payLoad) => {
+  updateAbout: ({ commit }, payLoad) => {
     commit('UPDATE_ABOUT', payLoad)
   },
-  updateSettings: ({commit}, payLoad) => {
+  updateSettings: ({ commit }, payLoad) => {
     commit('UPDATE_SETTINGS', payLoad)
   }
 }

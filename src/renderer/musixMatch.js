@@ -8,7 +8,7 @@ exports.mmGetLyrics = function (youTubeId) {
   var lyricsId = l(youTubeId)
   console.log('Lyrics id: ' + lyricsId)
   return axios
-    .get('https://extension.musixmatch.com/?res=' + lyricsId)
+    .get('http://extension.musixmatch.com/?res=' + lyricsId)
     .then(function (response) {
       return response.data
     })

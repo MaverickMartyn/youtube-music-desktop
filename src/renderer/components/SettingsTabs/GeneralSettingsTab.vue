@@ -22,21 +22,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'general-settings',
-    props: ['value'],
-    mounted () {
-    },
-    data: function () {
-      return {
-        valid: false
-      }
-    },
-    methods: {
-    },
-    components: {
+export default {
+  name: 'general-settings',
+  props: ['value'],
+  mounted () {
+  },
+  data: function () {
+    return {
+      valid: false
     }
+  },
+  methods: {
+  },
+  components: {
   }
+}
 </script>
 
 <style>

@@ -1,4 +1,4 @@
-const {ipcRenderer} = require('electron')
+const { ipcRenderer } = require('electron')
 // const {observe} = require('selector-observer')
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -14,6 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
         attributes: true,
         attributeFilter: ['show-fullscreen-controls_']
       })
+
+      var isPlayerFullscreenObserver = new MutationObserver(function (e) {
+        ipcRenderer.sendToHost('win:togglefullscreen', layoutElement.hasAttribute('player-fullscreened_'))
+      })
+
+      isPlayerFullscreenObserver.observe(layoutElement, {
+        attributes: true,
+        attributeFilter: ['player-fullscreened_']
+      })
+      
       clearInterval(layoutElementReadyLoop)
     }
   }, 300)
@@ -49,7 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         y.observe(byLineElement, {
           subtree: true,
-          characterData: true
+          characterData: true,
+          childList: true,
+          attributes: true
         })
       } else {
         console.log('byline not ready yet.')
@@ -107,6 +119,9 @@ function updateCurrentTrack (byLineElement, videoTag) {
   console.log('Track change detected.')
   var titleElement = document.querySelector('.title.style-scope.ytmusic-player-bar')
   var artistElement = document.querySelector('.byline.style-scope.ytmusic-player-bar.complex-string')
+  if (artistElement === null) {
+    return
+  }
   var artElement = document.querySelector('.image.style-scope.ytmusic-player-bar')
   var videoId = null
   if (artElement.src.indexOf('i.ytimg.com/vi') !== -1) {

@@ -5,21 +5,21 @@
 </template>
 
 <script>
-  import image from '../assets/lyrics.ovh.png'
-  export default {
-    name: 'lyricsovh-lyrics-btn',
-    props: ['isFullscreen'],
-    data: function () {
-      return {
-        icon: image
-      }
-    },
-    computed: {
-      isLoggedIn: function () {
-        return this.$store.state.ytm.ytmIsLoggedIn
-      }
+import image from '../assets/lyrics.ovh.png'
+export default {
+  name: 'lyricsovh-lyrics-btn',
+  props: ['isFullscreen'],
+  data: function () {
+    return {
+      icon: image
+    }
+  },
+  computed: {
+    isLoggedIn: function () {
+      return this.$store.state.ytm.ytmIsLoggedIn
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

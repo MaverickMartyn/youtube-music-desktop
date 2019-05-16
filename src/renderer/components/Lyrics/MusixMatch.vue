@@ -11,96 +11,96 @@
 </template>
 
 <script>
-  import MusixMatch from './../../MusixMatch.js'
-  export default {
-    name: 'musixmatch-lyrics',
-    props: ['value'],
-    mounted () {
-      // Watch for changes to the current track
-      this.$store.watch(
-        (state) => {
-          return this.$store.state.ytm.currentTrack // could also put a Getter here
-        },
-        (newTrack, oldTrack) => {
-          this.updateLyrics(newTrack)
-        },
-        // Optional Deep if you need it
-        {
-          // deep:true
-        }
-      )
-    },
-    data: function () {
-      return {
-        valid: false,
-        showLyricsDialog: false,
-        lyrics: null,
-        status: 'No musiXmatch lyrics found',
-        emphasizedLine: ''
+import MusixMatch from './../../MusixMatch.js'
+export default {
+  name: 'musixmatch-lyrics',
+  props: ['value'],
+  mounted () {
+    // Watch for changes to the current track
+    this.$store.watch(
+      (state) => {
+        return this.$store.state.ytm.currentTrack // could also put a Getter here
+      },
+      (newTrack, oldTrack) => {
+        this.updateLyrics(newTrack)
+      },
+      // Optional Deep if you need it
+      {
+        // deep:true
+      }
+    )
+  },
+  data: function () {
+    return {
+      valid: false,
+      showLyricsDialog: false,
+      lyrics: null,
+      status: 'No musiXmatch lyrics found',
+      emphasizedLine: ''
+    }
+  },
+  methods: {
+    toggle () {
+      this.showLyricsDialog = !this.showLyricsDialog
+      if (this.showLyricsDialog) {
+        this.updateLyrics(this.$store.state.ytm.currentTrack)
       }
     },
-    methods: {
-      toggle () {
-        this.showLyricsDialog = !this.showLyricsDialog
-        if (this.showLyricsDialog) {
-          this.updateLyrics(this.$store.state.ytm.currentTrack)
-        }
-      },
-      updateLyrics (newTrack) {
-        if (newTrack !== null) {
-          if (newTrack.videoId !== null) {
-            // Update lyrics using the video id
-            console.log('Updated MusixMatch lyrics')
-            this.lyrics = null
-            this.status = 'Getting your lyrics...'
-            var self = this
-            MusixMatch.mmGetLyrics(newTrack && newTrack.videoId).then((response) => {
-              if (response === '') {
+    updateLyrics (newTrack) {
+      if (newTrack !== null) {
+        if (newTrack.videoId !== null) {
+          // Update lyrics using the video id
+          console.log('Updated MusixMatch lyrics')
+          this.lyrics = null
+          this.status = 'Getting your lyrics...'
+          var self = this
+          MusixMatch.mmGetLyrics(newTrack && newTrack.videoId).then((response) => {
+            if (response === '') {
+              self.status = 'No musiXmatch lyrics found'
+              return
+            }
+            var parseString = require('xml2js').parseString
+            parseString(response, function (err, result) {
+              if (err) {
+                console.log(err.stack)
                 self.status = 'No musiXmatch lyrics found'
-                return
               }
-              var parseString = require('xml2js').parseString
-              parseString(response, function (err, result) {
-                if (err) {
-                  console.log(err.stack)
-                  self.status = 'No musiXmatch lyrics found'
-                }
-                self.lyrics = (result && result.transcript && result.transcript.text) || null
-                for (let i = 0; i < self.lyrics.length; i++) {
-                  self.lyrics[i].id = i
-                }
-              })
+              self.lyrics = (result && result.transcript && result.transcript.text) || null
+              for (let i = 0; i < self.lyrics.length; i++) {
+                self.lyrics[i].id = i
+              }
             })
-          }
+          })
         }
-      },
-      lyricClass (lyric) {
-        // console.log(this.$store.state.ytm.currentTrackTime)
-        // console.log(lyric)
-        if (!this.lyrics) {
-          return ''
-        }
-        var shouldEmphasize = (Number(lyric.$.start) <= this.$store.state.ytm.currentTrackTime && (Number(lyric.$.start) + Number(lyric.$.dur)) > this.$store.state.ytm.currentTrackTime)
-        if (shouldEmphasize) {
-          this.emphasizedLine = lyric._
-          var line = this.$refs.lyricsPopup.children[lyric.id]
-          if (line) {
-            line.scrollIntoView({
-              behavior: 'auto',
-              block: 'center',
-              inline: 'center'
-            })
-          }
-        }
-        return shouldEmphasize ? 'lyric-line current' : 'lyric-line'
       }
     },
-    computed: {
-      // useDarkTheme: function () {
-      //   return this.$store.getters.settings.general.darkMode
-      // },
-      trackTime: function () {
-        return this.$store.state.ytm.currentTrackTime
+    lyricClass (lyric) {
+      // console.log(this.$store.state.ytm.currentTrackTime)
+      // console.log(lyric)
+      if (!this.lyrics) {
+        return ''
+      }
+      var shouldEmphasize = (Number(lyric.$.start) <= this.$store.state.ytm.currentTrackTime && (Number(lyric.$.start) + Number(lyric.$.dur)) > this.$store.state.ytm.currentTrackTime)
+      if (shouldEmphasize) {
+        this.emphasizedLine = lyric._
+        var line = this.$refs.lyricsPopup.children[lyric.id]
+        if (line) {
+          line.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+          })
+        }
+      }
+      return shouldEmphasize ? 'lyric-line current' : 'lyric-line'
+    }
+  },
+  computed: {
+    // useDarkTheme: function () {
+    //   return this.$store.getters.settings.general.darkMode
+    // },
+    trackTime: function () {
+      return this.$store.state.ytm.currentTrackTime
       // },
       // currentLyricLine: function () {
       //   var that = this
@@ -108,11 +108,11 @@
       //     // return (element.$.start <= that.trackTime && (element.$.start + element.$.dur) <= that.trackTime)
       //     return (element.$.start <= that.trackTime)
       //   })._
-      }
-    },
-    components: {
     }
+  },
+  components: {
   }
+}
 </script>
 
 <style scoped>
