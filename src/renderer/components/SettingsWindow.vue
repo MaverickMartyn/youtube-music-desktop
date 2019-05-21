@@ -74,7 +74,7 @@
         <v-card flat>
           <v-card-text>
             <!-- <h2>{{ item.name }}</h2> -->
-            <component :is="item.component" v-model="settings[item.settingsKey]" v-on:settings-changed="save(item)"></component>
+            <component :is="item.component" v-model="settings[item.settingsKey]" v-on:settings-changed="save(item)" v-on:hotkey-binding-changed="saveHotkey"></component>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -114,7 +114,7 @@ export default {
       },
       {
         name: 'Hotkeys',
-        enabled: false,
+        enabled: true,
         settingsKey: 'hotkeys',
         component: HotkeysSettingsTab
       },
@@ -148,6 +148,11 @@ export default {
     save: function (item) {
       // console.log('Saving...')
       this.$store.dispatch('updateSettings', { field: item.settingsKey, value: this.settings[item.settingsKey] })
+    },
+    saveHotkey: function (arg) {
+      var hotkeySettings = JSON.parse(JSON.stringify(this.$store.state.settings.hotkeys))
+      hotkeySettings[arg.action] = arg.newHotkey
+      this.$store.dispatch('updateSettings', { field: 'hotkeys', value: hotkeySettings })
     }
   }
 }

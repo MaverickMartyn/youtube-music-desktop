@@ -37,10 +37,17 @@
               v-model="value.lyricsOvh.enabled"
               label="Enable Lyrics.ovh"
             ></v-checkbox>
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+      <v-expansion-panel-content :class="(useDarkTheme) ? 'custom-dark' : ''">
+        <div slot="header">APISEEDS Lyrics</div>
+        <v-card>
+          <v-card-text>
             <v-checkbox
               v-on:change="$emit('settings-changed')"
-              v-model="value.lyricsOvh.subtitlesStyle"
-              label="Use subtitle-style lyrics"
+              v-model="value.apiseeds.enabled"
+              label="Enable lyrics from APISEEDS"
             ></v-checkbox>
           </v-card-text>
         </v-card>

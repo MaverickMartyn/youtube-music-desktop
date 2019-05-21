@@ -2,6 +2,17 @@ const { ipcRenderer } = require('electron')
 // const {observe} = require('selector-observer')
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Handles the media buttons.
+  ipcRenderer.on('media:playpause', function () {
+    document.getElementById('play-pause-button').click()
+  })
+  ipcRenderer.on('media:next', function () {
+    document.querySelector('#left-controls > div > paper-icon-button.next-button.style-scope.ytmusic-player-bar').click()
+  })
+  ipcRenderer.on('media:previous', function () {
+    document.querySelector('#left-controls > div > paper-icon-button.previous-button.style-scope.ytmusic-player-bar').click()
+  })
+
   var layoutElementReadyLoop = setInterval(function () {
     // Setup fullscreen-controls mutation observer
     var layoutElement = document.getElementById('layout')
@@ -17,13 +28,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
       var isPlayerFullscreenObserver = new MutationObserver(function (e) {
         ipcRenderer.sendToHost('win:togglefullscreen', layoutElement.hasAttribute('player-fullscreened_'))
+        ipcRenderer.sendToHost('ytm:setFullscreen', layoutElement.hasAttribute('player-fullscreened_'))
       })
 
       isPlayerFullscreenObserver.observe(layoutElement, {
         attributes: true,
         attributeFilter: ['player-fullscreened_']
       })
-      
+
       clearInterval(layoutElementReadyLoop)
     }
   }, 300)

@@ -1,7 +1,8 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 import { autoUpdater } from 'electron-updater'
+import { isAccelerator } from 'electron-is-accelerator'
 import store from './../renderer/store'
 import './YTMInterop'
 const log = require('electron-log')
@@ -33,6 +34,7 @@ function createWindow () {
     frame: false,
     show: false
   })
+  mainWindow.setMenu(null)
 
   mainWindow.loadURL(winURL)
 
@@ -53,6 +55,46 @@ function createWindow () {
       console.log('Left full screen from Electron')
       store.dispatch('setFullscreen', false)
     })
+
+    var registered = globalShortcut.register('medianexttrack', function () {
+      mainWindow.webContents.send('media:next')
+    })
+    if (!registered) {
+      console.log('medianexttrack registration failed')
+    } else {
+      console.log('medianexttrack registration bound!')
+    }
+
+    registered = globalShortcut.register('mediaprevioustrack', function () {
+      mainWindow.webContents.send('media:previous')
+    })
+    if (!registered) {
+      console.log('mediaprevioustrack registration failed')
+    } else {
+      console.log('mediaprevioustrack registration bound!')
+    }
+    registered = globalShortcut.register('mediaplaypause', function () {
+      mainWindow.webContents.send('media:playpause')
+    })
+    if (!registered) {
+      console.log('mediaplaypause registration failed')
+    } else {
+      console.log('mediaplaypause registration bound!')
+    }
+
+    registered = globalShortcut.register(store.state.settings.hotkeys.next, function () {
+      mainWindow.webContents.send('media:next')
+    })
+    if (!registered) {
+      console.log('mediaplaypause registration failed')
+    } else {
+      console.log('mediaplaypause registration bound!')
+    }
+
+    store.watch((state) => state.settings.hotkeys, (oldValue, newValue) => {
+      console.log(isAccelerator('CommandOrControl+Shift+Z'))
+    })
+    // CommandOrControl
     mainWindow.show()
   })
 

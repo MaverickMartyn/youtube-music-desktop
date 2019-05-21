@@ -1,20 +1,51 @@
 {
 	"version": "0.2.0",
 	"configurations": [
-        {
-            "type": "electron",
-            "request": "launch",
-            "name": "Launch Electron against the workspace",
-            "appDir": "${workspaceFolder}"
-        },
 		{
+			"type": "node",
+			"request": "attach",
 			"name": "Attach",
+			"port": 5252
+		},
+		{
+			"type": "node",
+			"request": "attach",
+			"name": "Attach to Remote",
+			"address": "127.0.0.1",
+			"port": 5858,
+			"localRoot": "${workspaceFolder}",
+			"remoteRoot": "${workspaceFolder}"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Electron: Main",
+			"protocol": "inspector",
+			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+			"runtimeArgs": [
+				"--remote-debugging-port=9223",
+				"."
+			],
+			"windows": {
+				"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+			}
+		},
+		{
+			"name": "Electron: Renderer",
 			"type": "chrome",
 			"request": "attach",
 			"port": 9223,
 			"webRoot": "${workspaceFolder}",
-			"timeout": 30000,
-			"preLaunchTask": "webpack-dev-server"
+			"timeout": 30000
+		}
+	],
+	"compounds": [
+		{
+			"name": "Electron: All",
+			"configurations": [
+				"Electron: Main",
+				"Electron: Renderer"
+			]
 		}
 	]
 }

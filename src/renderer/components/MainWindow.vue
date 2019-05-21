@@ -2,38 +2,45 @@
   <div>
     <webview id="ytm_webview" :class="(this.isFullscreen) ? ' fullscreen' : ''" src="https://music.youtube.com" :preload="preload"></webview>
     <v-flex :class="'d-flex ui_buttons' + ((!this.isLoggedIn) ? ' btns-logged-out' : '') + ((this.isHtml5Fullscreen) ? ' htmlfullscreen' : '') + ((!this.displayFullscreenVideoControls) ? ' hidden' : '')">
+      <apiseeds-lyrics-btn v-if="isApiSeedsLyricsEnabled" @apiseeds-toggle-lyrics="apiSeedsLyricsToggle"></apiseeds-lyrics-btn>
       <lyricsovh-lyrics-btn v-if="isLyricsOvhLyricsEnabled" @lyricsovh-toggle-lyrics="lyricsOvhToggle"></lyricsovh-lyrics-btn>
       <musixmatch-lyrics-btn v-if="isMusixMatchEnabled" @musixmatch-toggle-lyrics="musixMatchToggle"></musixmatch-lyrics-btn>
       <settings-window-btn @toggle-show-settings="toggleShowSettings"></settings-window-btn>
     </v-flex>
     <musixmatch-lyrics ref="musixMatchLyrics" v-if="isMusixMatchEnabled"></musixmatch-lyrics>
     <lyricsovh-lyrics ref="lyricsOvhLyrics" v-if="isLyricsOvhLyricsEnabled"></lyricsovh-lyrics>
+    <apiseeds-lyrics ref="apiSeedsLyrics" v-if="isApiSeedsLyricsEnabled"></apiseeds-lyrics>
   </div>
 </template>
 
 <script>
 import MusixMatchBtn from './MusixMatchLyricsBtn.vue'
 import LyricsOvhLyricsBtn from './LyricsOvhLyricsBtn.vue'
+import ApiSeedsLyricsBtn from './ApiSeedsLyricsBtn.vue'
 import SettingsWindowBtn from './SettingsWindowBtn.vue'
 import MusixMatchLyrics from './Lyrics/MusixMatch'
 import LyricsOvhLyrics from './Lyrics/LyricsOvhLyrics'
+import ApiSeedsLyrics from './Lyrics/ApiSeedsLyrics'
 // const { ipcRenderer } = require('electron')
 
 export default {
   name: 'main-window',
   mounted () {
     var webview = document.getElementById('ytm_webview')
+    // Passes media key events to webview here.
+    this.$electron.ipcRenderer.on('media:previous', (event, data) => {
+      webview.send('media:previous')
+    })
+    this.$electron.ipcRenderer.on('media:next', (event, data) => {
+      webview.send('media:next')
+    })
+    this.$electron.ipcRenderer.on('media:playpause', (event, data) => {
+      webview.send('media:playpause')
+    })
     var that = this
     webview.addEventListener('ipc-message', function (event) {
-      // console.log(event.channel + ' with args:')
-      // console.log(event.args)
       var args = event.args
       that.$electron.ipcRenderer.send(event.channel, ...args)
-      // if (event.channel === 'isLoggedInChanged') {
-      //   console.log('Setting isloggedin to ' + event.args[0])
-
-      //   that.$store._modules.root._children.ytm.context.dispatch('setIsLoggedIn', event.args[0])
-      // }
     })
   },
   data: function () {
@@ -51,6 +58,9 @@ export default {
     isLyricsOvhLyricsEnabled: function () {
       return this.$store.state.settings.lyrics.lyricsOvh.enabled
     },
+    isApiSeedsLyricsEnabled: function () {
+      return this.$store.state.settings.lyrics.apiseeds.enabled
+    },
     isFullscreen: function () {
       return this.$store.state.ytm.isFullscreen
     },
@@ -64,9 +74,11 @@ export default {
   components: {
     'musixmatch-lyrics-btn': MusixMatchBtn,
     'lyricsovh-lyrics-btn': LyricsOvhLyricsBtn,
+    'apiseeds-lyrics-btn': ApiSeedsLyricsBtn,
     'settings-window-btn': SettingsWindowBtn,
     'musixmatch-lyrics': MusixMatchLyrics,
-    'lyricsovh-lyrics': LyricsOvhLyrics
+    'lyricsovh-lyrics': LyricsOvhLyrics,
+    'apiseeds-lyrics': ApiSeedsLyrics
   },
   methods: {
     open (link) {
@@ -77,6 +89,9 @@ export default {
     },
     lyricsOvhToggle () {
       this.$refs.lyricsOvhLyrics.toggle()
+    },
+    apiSeedsLyricsToggle () {
+      this.$refs.apiSeedsLyrics.toggle()
     },
     toggleShowSettings () {
       this.$emit('toggle-show-settings')

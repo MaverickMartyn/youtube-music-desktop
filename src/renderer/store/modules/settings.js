@@ -9,8 +9,10 @@ const state = {
       subtitlesStyle: false
     },
     lyricsOvh: {
-      enabled: false,
-      subtitlesStyle: false
+      enabled: true
+    },
+    apiseeds: {
+      enabled: true
     }
   },
   lastfm: {

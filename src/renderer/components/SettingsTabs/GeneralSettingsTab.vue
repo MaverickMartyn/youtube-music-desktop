@@ -10,6 +10,7 @@
       <v-checkbox
         v-on:change="$emit('settings-changed')"
         v-model="value.startWithWindows"
+        disabled
         label="Start YouTube Music for Desktop along with Windows"
       ></v-checkbox>
       <v-checkbox
