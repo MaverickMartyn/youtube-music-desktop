@@ -2,9 +2,10 @@
 
 import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 import { autoUpdater } from 'electron-updater'
-import { isAccelerator } from 'electron-is-accelerator'
+// import { isAccelerator } from 'electron-is-accelerator'
 import store from './../renderer/store'
 import './YTMInterop'
+import './hotkeys'
 const log = require('electron-log')
 
 autoUpdater.logger = log
@@ -91,9 +92,9 @@ function createWindow () {
       console.log('mediaplaypause registration bound!')
     }
 
-    store.watch((state) => state.settings.hotkeys, (oldValue, newValue) => {
-      console.log(isAccelerator('CommandOrControl+Shift+Z'))
-    })
+    // store.watch((state) => state.settings.hotkeys, (oldValue, newValue) => {
+    //   console.log(isAccelerator('CommandOrControl+Shift+Z'))
+    // })
     // CommandOrControl
     mainWindow.show()
   })
