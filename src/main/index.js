@@ -83,19 +83,6 @@ function createWindow () {
       console.log('mediaplaypause registration bound!')
     }
 
-    registered = globalShortcut.register(store.state.settings.hotkeys.next, function () {
-      mainWindow.webContents.send('media:next')
-    })
-    if (!registered) {
-      console.log('mediaplaypause registration failed')
-    } else {
-      console.log('mediaplaypause registration bound!')
-    }
-
-    // store.watch((state) => state.settings.hotkeys, (oldValue, newValue) => {
-    //   console.log(isAccelerator('CommandOrControl+Shift+Z'))
-    // })
-    // CommandOrControl
     mainWindow.show()
   })
 
