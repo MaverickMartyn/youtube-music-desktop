@@ -27,16 +27,12 @@ export default {
   name: 'main-window',
   mounted () {
     var webview = document.getElementById('ytm_webview')
-    // Passes media key events to webview here.
-    this.$electron.ipcRenderer.on('media:previous', (event, data) => {
-      webview.send('media:previous')
+
+    // Passes events to webview
+    this.$electron.ipcRenderer.on('towebview', (event, eventToPass, data) => {
+      webview.send(eventToPass)
     })
-    this.$electron.ipcRenderer.on('media:next', (event, data) => {
-      webview.send('media:next')
-    })
-    this.$electron.ipcRenderer.on('media:playpause', (event, data) => {
-      webview.send('media:playpause')
-    })
+
     var that = this
     webview.addEventListener('ipc-message', function (event) {
       var args = event.args

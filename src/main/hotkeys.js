@@ -34,35 +34,35 @@ function registerAllKeys (mainWindow, hotKeySettings) {
     {
       action: 'playpause',
       func: function () {
-        mainWindow.webContents.send('media:playpause')
+        mainWindow.webContents.send('towebview', 'media:playpause')
         console.log('playpause hotkey pressed')
       }
     },
     {
       action: 'next',
       func: function () {
-        mainWindow.webContents.send('media:next')
+        mainWindow.webContents.send('towebview', 'media:next')
         console.log('next hotkey pressed')
       }
     },
     {
       action: 'previous',
       func: function () {
-        mainWindow.webContents.send('media:previous')
+        mainWindow.webContents.send('towebview', 'media:previous')
         console.log('previous hotkey pressed')
       }
     },
     {
       action: 'like',
       func: function () {
-        mainWindow.webContents.send('ytm:like')
+        mainWindow.webContents.send('towebview', 'ytm:like')
         console.log('like hotkey pressed')
       }
     },
     {
       action: 'dislike',
       func: function () {
-        mainWindow.webContents.send('ytm:dislike')
+        mainWindow.webContents.send('towebview', 'ytm:dislike')
         console.log('dislike hotkey pressed')
       }
     }
