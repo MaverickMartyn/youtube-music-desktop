@@ -11,6 +11,6 @@
 			"outFiles": [
 			  "${workspaceRoot}/src/main/index.js"
 			]
-		  }
+		}
 	]
 }
