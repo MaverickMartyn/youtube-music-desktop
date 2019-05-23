@@ -62,13 +62,29 @@ export default {
           this.currentHotkey = (() => {
             // ((event.shiftKey) ? 'shiftKey' : '') + ((event.ctrlKey) ? 'ctrlKey' : '') + ((event.altKey) ? 'altKey' : '') + ((event.metaKey) ? 'metaKey' : '') + event.keyCode.toString()
             var keyCombo = ''
-            if (event.key !== 'Alt' &&
-              event.key !== 'Shift' &&
-              event.key !== 'Control') {
-              keyCombo = event.key.toUpperCase()
+            var blacklist = [
+              'Alt',
+              'Meta',
+              'Shift',
+              'Control',
+              'AltGraph'
+            ]
+            if (blacklist.indexOf(event.key) <= -1) {
+              if (event.key === '+') {
+                keyCombo = 'Plus'
+              } else if (event.code.startsWith('Arrow')) {
+                keyCombo = event.code.replace('Arrow', '')
+              } else if (event.code.startsWith('Numpad')) {
+                keyCombo = event.code
+              } else {
+                keyCombo = event.key.toUpperCase()
+              }
             }
             if (event.altKey) {
               keyCombo = 'ALT + ' + keyCombo
+            }
+            if (event.metaKey) {
+              keyCombo = 'SUPER + ' + keyCombo
             }
             if (event.shiftKey) {
               keyCombo = 'SHIFT + ' + keyCombo
@@ -79,6 +95,8 @@ export default {
             return keyCombo
           })()
         }
+      } else {
+        document.body.onkeydown = null
       }
     }
   },

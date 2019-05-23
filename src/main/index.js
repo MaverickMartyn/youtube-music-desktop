@@ -1,11 +1,11 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { autoUpdater } from 'electron-updater'
 // import { isAccelerator } from 'electron-is-accelerator'
 import store from './../renderer/store'
 import './YTMInterop'
-import './hotkeys'
+import hotKeys from './hotkeys'
 const log = require('electron-log')
 
 autoUpdater.logger = log
@@ -57,33 +57,8 @@ function createWindow () {
       store.dispatch('setFullscreen', false)
     })
 
-    var registered = globalShortcut.register('medianexttrack', function () {
-      mainWindow.webContents.send('media:next')
-    })
-    if (!registered) {
-      console.log('medianexttrack registration failed')
-    } else {
-      console.log('medianexttrack registration bound!')
-    }
-
-    registered = globalShortcut.register('mediaprevioustrack', function () {
-      mainWindow.webContents.send('media:previous')
-    })
-    if (!registered) {
-      console.log('mediaprevioustrack registration failed')
-    } else {
-      console.log('mediaprevioustrack registration bound!')
-    }
-    registered = globalShortcut.register('mediaplaypause', function () {
-      mainWindow.webContents.send('media:playpause')
-    })
-    if (!registered) {
-      console.log('mediaplaypause registration failed')
-    } else {
-      console.log('mediaplaypause registration bound!')
-    }
-
     mainWindow.show()
+    hotKeys.initializeHotKeys(mainWindow)
   })
 
   mainWindow.on('closed', () => {

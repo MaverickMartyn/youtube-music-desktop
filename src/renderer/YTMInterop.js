@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron')
 // const {observe} = require('selector-observer')
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Handles the media buttons.
+  // Handles the media buttons and hotkeys.
   ipcRenderer.on('media:playpause', function () {
     document.getElementById('play-pause-button').click()
   })
@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
   })
   ipcRenderer.on('media:previous', function () {
     document.querySelector('#left-controls > div > paper-icon-button.previous-button.style-scope.ytmusic-player-bar').click()
+  })
+  ipcRenderer.on('ytm:like', function () {
+    document.querySelector('#like-button-renderer > paper-icon-button.like.style-scope.ytmusic-like-button-renderer').click()
+  })
+  ipcRenderer.on('ytm:dislike', function () {
+    document.querySelector('#like-button-renderer > paper-icon-button.dislike.style-scope.ytmusic-like-button-renderer').click()
   })
 
   var layoutElementReadyLoop = setInterval(function () {
