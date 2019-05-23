@@ -55,6 +55,8 @@ export default {
 <style>
   html {
     overflow: hidden;
+    height: 100vh;
+    width: 100vw;
   }
 
   .v-overlay:before {

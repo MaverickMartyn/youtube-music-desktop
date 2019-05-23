@@ -69,7 +69,7 @@ export default {
 <style lang="scss" scoped>
 .window-frame {
   height: 100vh;
-  overflow: hidden;
+  width: 100vw;
 }
 .title-bar {
   -webkit-user-select: none;

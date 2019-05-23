@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="window-root">
     <v-toolbar
       color="#232323"
       dark
@@ -157,3 +157,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  div.window-root {
+    overflow: auto;
+    width: 100vw;
+    height: calc(100vh - 32px);
+  }
+</style>

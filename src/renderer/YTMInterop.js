@@ -18,6 +18,15 @@ document.addEventListener('DOMContentLoaded', function () {
   ipcRenderer.on('ytm:dislike', function () {
     document.querySelector('#like-button-renderer > paper-icon-button.dislike.style-scope.ytmusic-like-button-renderer').click()
   })
+  ipcRenderer.on('ytm:toggleshuffle', function () {
+    document.querySelector('#right-controls > div > paper-icon-button.shuffle.style-scope.ytmusic-player-bar').click()
+  })
+  ipcRenderer.on('ytm:togglemute', function () {
+    document.querySelector('#right-controls > div > paper-icon-button.volume.style-scope.ytmusic-player-bar').click()
+  })
+  ipcRenderer.on('ytm:changeloopmode', function () {
+    document.querySelector('#right-controls > div > paper-icon-button.repeat.style-scope.ytmusic-player-bar').click()
+  })
 
   var layoutElementReadyLoop = setInterval(function () {
     // Setup fullscreen-controls mutation observer

@@ -23,7 +23,7 @@ function hotkeyToAccelerator (hotkey) {
 export default { initializeHotKeys, hotkeyToAccelerator }
 
 function initializeHotKeys (mainWindow) {
-  store.watch((state) => state.settings.hotkeys, (oldValue, newValue) => {
+  store.watch((state) => state.settings.hotkeys, (newValue, oldValue) => {
     registerAllKeys(mainWindow, newValue)
   })
   registerAllKeys(mainWindow, store.state.settings.hotkeys)
@@ -64,6 +64,27 @@ function registerAllKeys (mainWindow, hotKeySettings) {
       func: function () {
         mainWindow.webContents.send('towebview', 'ytm:dislike')
         console.log('dislike hotkey pressed')
+      }
+    },
+    {
+      action: 'togglemute',
+      func: function () {
+        mainWindow.webContents.send('towebview', 'ytm:togglemute')
+        console.log('togglemute hotkey pressed')
+      }
+    },
+    {
+      action: 'toggleshuffle',
+      func: function () {
+        mainWindow.webContents.send('towebview', 'ytm:toggleshuffle')
+        console.log('toggleshuffle hotkey pressed')
+      }
+    },
+    {
+      action: 'changeloopmode',
+      func: function () {
+        mainWindow.webContents.send('towebview', 'ytm:changeloopmode')
+        console.log('changeloopmode hotkey pressed')
       }
     }
   ]
