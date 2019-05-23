@@ -2896,12 +2896,12 @@ electron-chromedriver@~3.0.0:
     electron-download "^4.1.0"
     extract-zip "^1.6.5"
 
-electron-debug@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/electron-debug/-/electron-debug-2.1.0.tgz#8a926a37a7b2db77d35063ba1362c05e0fb78bda"
+electron-debug@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/electron-debug/-/electron-debug-2.2.0.tgz#408672aaf17436818287409c48ab2451e6e76394"
   dependencies:
     electron-is-dev "^0.3.0"
-    electron-localshortcut "^3.0.0"
+    electron-localshortcut "^3.1.0"
 
 electron-devtools-installer@^2.2.4:
   version "2.2.4"
@@ -2934,7 +2934,7 @@ electron-is-dev@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.3.0.tgz#14e6fda5c68e9e4ecbeff9ccf037cbd7c05c5afe"
 
-electron-localshortcut@^3.0.0:
+electron-localshortcut@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/electron-localshortcut/-/electron-localshortcut-3.1.0.tgz#10c1ffd537b8d39170aaf6e1551341f7780dd2ce"
   dependencies:
@@ -2943,9 +2943,9 @@ electron-localshortcut@^3.0.0:
     keyboardevent-from-electron-accelerator "^1.1.0"
     keyboardevents-areequal "^0.2.1"
 
-electron-log@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-3.0.0.tgz#5f29a461e45785fbcaa9d3e9365c659e0728eb27"
+electron-log@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-3.0.5.tgz#9bdd307f1f1aec85c0873babd6bdfffb1a661436"
 
 electron-osx-sign@0.4.11:
   version "0.4.11"
@@ -3006,9 +3006,9 @@ electron-updater@^4.0.6:
     semver "^5.6.0"
     source-map-support "^0.5.9"
 
-electron@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-4.0.3.tgz#0d45a4bcfb63b3e39daf44aeb599b89e95d2a055"
+electron@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-4.2.2.tgz#e8720e68b2ef3dcf4ab721f9546cf436e08576d2"
   dependencies:
     "@types/node" "^10.12.18"
     electron-download "^4.1.0"
