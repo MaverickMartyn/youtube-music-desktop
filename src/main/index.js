@@ -128,6 +128,12 @@ ipcMain.on('update:update-now', (event, forcedValue) => {
   autoUpdater.quitAndInstall()
 })
 
+ipcMain.on('app:change-startup-settings', (event, value) => {
+  app.setLoginItemSettings({
+    openAtLogin: value
+  })
+})
+
 app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })

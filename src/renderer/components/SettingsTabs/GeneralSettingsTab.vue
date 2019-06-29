@@ -10,7 +10,6 @@
       <v-checkbox
         v-on:change="$emit('settings-changed')"
         v-model="value.startWithWindows"
-        disabled
         label="Start YouTube Music for Desktop along with Windows"
       ></v-checkbox>
       <v-checkbox
@@ -27,6 +26,16 @@ export default {
   name: 'general-settings',
   props: ['value'],
   mounted () {
+    this.$store.watch(
+      (state) => {
+        return this.$store.state.settings.general.startWithWindows // could also put a Getter here
+      },
+      (newValue, oldValue) => {
+        if (oldValue !== newValue) {
+          this.$electron.ipcRenderer.send('app:change-startup-settings', newValue)
+        }
+      }
+    )
   },
   data: function () {
     return {
