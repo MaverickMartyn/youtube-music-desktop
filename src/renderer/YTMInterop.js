@@ -160,7 +160,8 @@ function updateCurrentTrack (byLineElement, videoTag) {
     byLine: byLineElement.textContent.replace(/\s+/g, ' ').trim(),
     videoId,
     art: artElement.src,
-    duration: videoTag.duration
+    duration: document.querySelector('#left-controls > span').textContent.split('/')[1].trim()
+    // duration: videoTag.duration
   })
 }
 

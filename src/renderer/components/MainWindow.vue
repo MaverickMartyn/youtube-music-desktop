@@ -4,21 +4,21 @@
     <v-flex :class="'d-flex ui_buttons' + ((!this.isLoggedIn) ? ' btns-logged-out' : '') + ((this.isHtml5Fullscreen) ? ' htmlfullscreen' : '') + ((!this.displayFullscreenVideoControls) ? ' hidden' : '')">
       <apiseeds-lyrics-btn v-if="isApiSeedsLyricsEnabled" @apiseeds-toggle-lyrics="apiSeedsLyricsToggle"></apiseeds-lyrics-btn>
       <lyricsovh-lyrics-btn v-if="isLyricsOvhLyricsEnabled" @lyricsovh-toggle-lyrics="lyricsOvhToggle"></lyricsovh-lyrics-btn>
-      <musixmatch-lyrics-btn v-if="isMusixMatchEnabled" @musixmatch-toggle-lyrics="musixMatchToggle"></musixmatch-lyrics-btn>
+      <!-- <musixmatch-lyrics-btn v-if="isMusixMatchEnabled" @musixmatch-toggle-lyrics="musixMatchToggle"></musixmatch-lyrics-btn> -->
       <settings-window-btn @toggle-show-settings="toggleShowSettings"></settings-window-btn>
     </v-flex>
-    <musixmatch-lyrics ref="musixMatchLyrics" v-if="isMusixMatchEnabled"></musixmatch-lyrics>
+    <!-- <musixmatch-lyrics ref="musixMatchLyrics" v-if="isMusixMatchEnabled"></musixmatch-lyrics> -->
     <lyricsovh-lyrics ref="lyricsOvhLyrics" v-if="isLyricsOvhLyricsEnabled"></lyricsovh-lyrics>
     <apiseeds-lyrics ref="apiSeedsLyrics" v-if="isApiSeedsLyricsEnabled"></apiseeds-lyrics>
   </div>
 </template>
 
 <script>
-import MusixMatchBtn from './MusixMatchLyricsBtn.vue'
+// import MusixMatchBtn from './MusixMatchLyricsBtn.vue'
 import LyricsOvhLyricsBtn from './LyricsOvhLyricsBtn.vue'
 import ApiSeedsLyricsBtn from './ApiSeedsLyricsBtn.vue'
 import SettingsWindowBtn from './SettingsWindowBtn.vue'
-import MusixMatchLyrics from './Lyrics/MusixMatch'
+// import MusixMatchLyrics from './Lyrics/MusixMatch'
 import LyricsOvhLyrics from './Lyrics/LyricsOvhLyrics'
 import ApiSeedsLyrics from './Lyrics/ApiSeedsLyrics'
 // const { ipcRenderer } = require('electron')
@@ -68,11 +68,11 @@ export default {
     }
   },
   components: {
-    'musixmatch-lyrics-btn': MusixMatchBtn,
+    // 'musixmatch-lyrics-btn': MusixMatchBtn,
     'lyricsovh-lyrics-btn': LyricsOvhLyricsBtn,
     'apiseeds-lyrics-btn': ApiSeedsLyricsBtn,
     'settings-window-btn': SettingsWindowBtn,
-    'musixmatch-lyrics': MusixMatchLyrics,
+    // 'musixmatch-lyrics': MusixMatchLyrics,
     'lyricsovh-lyrics': LyricsOvhLyrics,
     'apiseeds-lyrics': ApiSeedsLyrics
   },
