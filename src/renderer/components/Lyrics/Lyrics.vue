@@ -1,15 +1,15 @@
 <template>
   <v-layout v-if="this.$store.state.ytm.currentTrack" row text-md-center justify-center>
-    <v-flex ref="lyricsPopup" :class="'lyrics-popup' + ((this.showLyricsDialog) ? ' open' : '')">
+    <v-flex ref="lyricsPopup" :class="'lyrics-popup' + ((this.showLyricsDialog && (this.isApiSeedsLyricsEnabled || this.isLyricsOvhLyricsEnabled)) ? ' open' : '')">
       <v-switch v-if="autoScrollingEnabled" class="scroll-pause-switch" label="Pause auto-scrolling" v-model="autoScrollingPaused"></v-switch>
       <v-tabs fixed-tabs>
-        <v-tab class="flex-col" href="#tab-ovh">
+        <v-tab v-if="isLyricsOvhLyricsEnabled" class="flex-col" href="#tab-ovh">
           <div class="lyric-tab-icon">
             <v-img :src="ovhIcon"></v-img>
           </div>
           <span class="provider-name">Lyrics.Ovh</span>
         </v-tab>
-        <v-tab class="flex-col" href="#tab-apiseeds">
+        <v-tab v-if="isApiSeedsLyricsEnabled" class="flex-col" href="#tab-apiseeds">
           <div class="lyric-tab-icon">
             <v-img :src="apiseedsIcon"></v-img>
           </div>
@@ -17,10 +17,10 @@
         </v-tab>
         <v-tabs-items v-model="currentProvider" v-on:change="tabChanged">
           <v-tab-item value="tab-ovh">
-            <p>OVH</p>
+            <p>Lyrics by OVH Lyrics</p>
           </v-tab-item>
           <v-tab-item value="tab-apiseeds">
-            <p>APISEEDS</p>
+            <p>Lyrics by APISEEDS</p>
           </v-tab-item>
         </v-tabs-items>
       </v-tabs>
@@ -165,6 +165,12 @@ export default {
     trackLengthInSeconds: function () {
       var durArr = this.$store.state.ytm.currentTrack.duration.split(':')
       return (Number(durArr[0]) * 60) + Number(durArr[1])
+    },
+    isLyricsOvhLyricsEnabled: function () {
+      return this.$store.state.settings.lyrics.lyricsOvh.enabled
+    },
+    isApiSeedsLyricsEnabled: function () {
+      return this.$store.state.settings.lyrics.apiseeds.enabled
     }
   },
   components: {
