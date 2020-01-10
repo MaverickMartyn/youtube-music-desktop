@@ -1,5 +1,7 @@
 .lyrics-popup{
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s linear;
     top: 3.5em;
     left: 3.5em;
     right: 3.5em;
@@ -21,7 +23,8 @@
   }
   
   .open {
-    display: block;
+    visibility: visible;
+    opacity: 1;
   }
 
   .lyrics-status-message {
