@@ -10,7 +10,7 @@
   <v-expansion-panel
       expand
     >
-      <v-expansion-panel-content :class="(useDarkTheme) ? 'custom-dark' : ''">
+      <!-- <v-expansion-panel-content :class="(useDarkTheme) ? 'custom-dark' : ''">
         <div slot="header">MusixMatch (Broken - To be fixed)</div>
         <v-card>
           <v-card-text>
@@ -27,7 +27,7 @@
             ></v-checkbox>
           </v-card-text>
         </v-card>
-      </v-expansion-panel-content>
+      </v-expansion-panel-content> -->
       <v-expansion-panel-content :class="(useDarkTheme) ? 'custom-dark' : ''">
         <div slot="header">Lyrics.ovh</div>
         <v-card>

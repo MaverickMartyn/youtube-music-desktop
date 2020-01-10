@@ -40,6 +40,7 @@
     "vue": "^2.6.10",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.2",
+    "vue-scrollto": "^2.15.0",
     "vuetify": "^1.4.4",
     "vuex": "^3.1.0",
     "vuex-electron": "https://github.com/MaverickMartyn/vuex-electron",
