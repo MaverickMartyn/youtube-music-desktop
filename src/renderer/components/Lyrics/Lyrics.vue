@@ -1,6 +1,7 @@
 <template>
   <v-layout v-if="this.$store.state.ytm.currentTrack" row text-md-center justify-center>
     <v-flex ref="lyricsPopup" :class="'lyrics-popup' + ((this.showLyricsDialog) ? ' open' : '')">
+      <v-switch v-if="autoScrollingEnabled" class="scroll-pause-switch" label="Pause auto-scrolling" v-model="autoScrollingPaused"></v-switch>
       <v-tabs fixed-tabs>
         <v-tab class="flex-col" href="#tab-ovh">
           <div class="lyric-tab-icon">
@@ -60,7 +61,9 @@ export default {
       showLyricsDialog: false,
       lyrics: null,
       currentProvider: null,
-      status: 'No lyrics found'
+      status: 'No lyrics found',
+      lyricsScrollerAnimationFrameHandle: null,
+      autoScrollingPaused: false
     }
   },
   methods: {
@@ -73,10 +76,42 @@ export default {
     tabChanged: function () {
       this.updateLyrics(this.$store.state.ytm.currentTrack)
     },
+    scrollLyrics: function () {
+      let that = this
+      var prevFrameTime = null
+      // var prevScrollPosition = null
+      window.cancelAnimationFrame(this.lyricsScrollerAnimationFrameHandle)
+      var step = function (frameTime) {
+        if (prevFrameTime === null) {
+          prevFrameTime = frameTime
+        }
+        // var deltaTime = frameTime - prevFrameTime
+
+        // var remainingTime = that.trackLengthInSeconds - that.$store.state.ytm.currentTrackTime
+        var songProgess = (that.$store.state.ytm.currentTrackTime / that.trackLengthInSeconds)
+        // var remainingDistance = that.$refs.lyricsPopup.scrollHeight - (that.$refs.lyricsPopup.clientHeight + that.$refs.lyricsPopup.scrollTop)
+        var newLyricsProgress = that.$refs.lyricsPopup.scrollHeight * songProgess
+        // var distanceToMoveEachFrame = (remainingDistance / (remainingTime * 1000)) * deltaTime
+        // distanceToMoveEachFrame = 0.5
+        // prevScrollPosition += distanceToMoveEachFrame
+
+        if (that.$store.state.settings.lyrics.misc.autoScrollLyrics && !that.autoScrollingPaused) {
+          window.scrollBy({
+            top: that.$refs.lyricsPopup.scrollTop = newLyricsProgress - (that.$refs.lyricsPopup.clientHeight / 2),
+            left: 0,
+            behavior: 'smooth'
+          })
+        }
+
+        prevFrameTime = frameTime
+        that.lyricsScrollerAnimationFrameHandle = window.requestAnimationFrame(step)
+      }
+      this.lyricsScrollerAnimationFrameHandle = window.requestAnimationFrame(step)
+    },
     updateLyrics (newTrack) {
       if (newTrack !== null) {
         // Update lyrics using the video id
-        console.log('Updated Lyrics.ovh lyrics')
+        console.log('Updated lyrics')
         this.lyrics = null
         switch (this.currentProvider) {
           case 'tab-ovh':
@@ -90,6 +125,7 @@ export default {
                 // console.log(this.$refs.lyricsPopup.scrollHeight)
                 // window.testtest = this.$refs.lyricsPopup this.$refs['lyricLine' + this.lyrics[this.lyrics.length-1].id][0]
                 // scrollToSmoothly(this.$refs.lyricsPopup.scrollHeight, 100)
+                this.scrollLyrics()
               }).catch(() => {
                 this.status = 'No Lyrics.ovh lyrics found'
               })
@@ -106,6 +142,7 @@ export default {
                 // console.log(this.$refs.lyricsPopup.scrollHeight)
                 // window.testtest = this.$refs.lyricsPopup this.$refs['lyricLine' + this.lyrics[this.lyrics.length-1].id][0]
                 // scrollToSmoothly(this.$refs.lyricsPopup.scrollHeight, 100)
+                this.scrollLyrics()
               }).catch(() => {
                 this.status = 'No APISEEDS lyrics found'
               })
@@ -121,6 +158,13 @@ export default {
   computed: {
     trackTime: function () {
       return this.$store.state.ytm.currentTrackTime
+    },
+    autoScrollingEnabled: function () {
+      return this.$store.state.settings.lyrics.misc.autoScrollLyrics
+    },
+    trackLengthInSeconds: function () {
+      var durArr = this.$store.state.ytm.currentTrack.duration.split(':')
+      return (Number(durArr[0]) * 60) + Number(durArr[1])
     }
   },
   components: {
@@ -148,5 +192,11 @@ export default {
 <style lang="scss">
   .flex-col a {
     flex-direction: column;
+  }
+  .scroll-pause-switch {
+    position: fixed;
+    top: 4.5em;
+    right: 4.5em;
+    z-index: 1;
   }
 </style>

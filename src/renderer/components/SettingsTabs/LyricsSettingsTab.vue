@@ -52,10 +52,17 @@
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
-      <v-expansion-panel-content hidden :class="(useDarkTheme) ? 'custom-dark' : ''">
-        <div slot="header">Others</div>
+      <v-expansion-panel-content :class="(useDarkTheme) ? 'custom-dark' : ''">
+        <div slot="header">Miscelaneous</div>
         <v-card>
-          <v-card-text>Nothing here yet. :/</v-card-text>
+          <v-card-text>
+            <v-checkbox
+              v-on:change="$emit('settings-changed')"
+              v-model="value.misc.autoScrollLyrics"
+              label="Automatically scroll lyrics as the song plays."
+            ></v-checkbox>
+            <!-- <v-slider v-model="value.misc.autoScrollDelay" label="Delay before autoscrolling (in seconds)" min="0" max="4"></v-slider> -->
+          </v-card-text>
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>

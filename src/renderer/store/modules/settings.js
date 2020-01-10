@@ -13,6 +13,9 @@ const state = {
     },
     apiseeds: {
       enabled: true
+    },
+    misc: {
+      autoScrollLyrics: true
     }
   },
   lastfm: {
