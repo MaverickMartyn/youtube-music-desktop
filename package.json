@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@mdi/font": "^2.8.94",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "electron-log": "^1.3.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^3.1.2",
